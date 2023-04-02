@@ -8,10 +8,6 @@ proxy-providers:
     port: 30001
     cipher: aes-128-gcm
     password: desperadoj.com_free_proxy_etg0
-    health-check:
-      enable: true
-      interval: 600
-      url: http://apm3.music.163.com
             
 proxy-groups:
   - name: NeteaseMusic
