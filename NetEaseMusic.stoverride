@@ -1,16 +1,13 @@
 name: 网易云音乐解锁
 desc: 解锁灰色歌曲与VIP，请在网易云音乐策略组中选择解锁节点，节点来源于网络
 
-proxy-providers:
-  Music:
-    type: http
-    url: "https://raw.githubusercontent.com/abrclano/stach-rules/main/NetEaseMusic.yaml"
-    interval: 86400
-    path: ./proxy/NetEaseMusic.yaml
-    health-check:
-      enable: true
-      interval: 600
-      url: http://apm3.music.163.com
+proxies:
+  - name: UnblockMusic
+    type: ss
+    server: music.desperadoj.com
+    port: 30001
+    cipher: aes-128-gcm
+    password: desperadoj.com_free_proxy_etg0
             
 proxy-groups:
   - name: NetEaseMusic
@@ -18,7 +15,7 @@ proxy-groups:
     url: http://apm3.music.163.com
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netease_Music.png
     use:
-      - Music
+      - UnblockMusic
     proxies:
       - DIRECT
 
