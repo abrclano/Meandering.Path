@@ -1,8 +1,15 @@
 # > NeteaseMusic Unlock List
 # > 2023.04.02
 proxies:
-  - {"server":"music.desperadoj.com","port":30001,"cipher":"aes-128-gcm","password":"desperadoj.com_free_proxy_etg0","tfo":false,"udp":false,"name":"UnblockNetEase","type":"ss"}
-  - {"server":"101.132.192.212","port":30003,"cipher":"aes-128-gcm","password":"desperadoj.com_free_proxy_etg0","tfo":false,"udp":false,"name":"NeteaseMusic Unlock 1","type":"ss"}
+  - name: NeteaseMusic Unlock 1
+    type: ss
+    server: 101.132.192.212
+    port: 30003
+    cipher: aes-128-gcm
+    password: desperadoj.com_free_proxy_etg0
+    tfo: false
+    udp: false
+   
 
   - name: unblockNetEase
     type: ss
@@ -10,3 +17,5 @@ proxies:
     port: 30001
     cipher: aes-128-gcm
     password: desperadoj.com_free_proxy_etg0
+    tfo: false
+    udp: false
