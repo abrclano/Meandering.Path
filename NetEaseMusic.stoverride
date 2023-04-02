@@ -10,7 +10,6 @@ proxy-providers:
     health-check:
       enable: true
       interval: 600
-      url: http://apm3.music.163.com
             
 proxy-groups:
   - name: NetEaseMusic
