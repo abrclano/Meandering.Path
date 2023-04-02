@@ -2,15 +2,15 @@ name: 网易云音乐解锁
 desc: 解锁灰色歌曲与VIP，请在网易云音乐策略组中选择解锁节点，节点来源于网络
 
 proxy-providers:
-  Music:
+  NeteaseMusic:
     type: http
-    url: "https://raw.githubusercontent.com/abrclano/stach-rules/main/NetEaseMusic.yaml"
-    interval: 86400
-    path: ./proxy/NetEaseMusic.yaml
+    path: ./Proxy/NeteaseMusic.yaml
+    url: https://cdn.staticaly.com/gh/DesperadoJ/Rules-for-UnblockNeteaseMusic/master/Clash/Proxy/NeteaseMusic.yaml
+    interval: 3600
     health-check:
       enable: true
-      interval: 600
-      url: http://apm3.music.163.com
+      url: http://www.gstatic.com/generate_204
+      interval: 300
             
 proxy-groups:
   - name: NetEaseMusic
@@ -23,12 +23,19 @@ proxy-groups:
       - DIRECT
 
 rule-providers:
-  NetEaseMusic:
+  NeteaseMusic:
     type: http
     behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/NetEaseMusic/NetEaseMusic.yaml"
-    path: ./ruleset/NetEaseMusic.yaml
+    path: ./RuleSet/NeteaseMusic.yaml
+    url: https://cdn.staticaly.com/gh/DesperadoJ/Rules-for-UnblockNeteaseMusic/master/Clash/RuleSet/NeteaseMusic.yaml
     interval: 86400
 
 rules:
-  - RULE-SET,NetEaseMusic,NetEaseMusic
+  # Netease Music Advertising
+  - DOMAIN,admusicpic.music.126.net,REJECT
+  - DOMAIN,iadmat.nosdn.127.net,REJECT
+  - DOMAIN,iadmusicmat.music.126.net,REJECT
+  - DOMAIN,iadmusicmatvideo.music.126.net,REJECT
+
+  # Netease Music
+  - RULE-SET,NeteaseMusic,NetEaseMusic
