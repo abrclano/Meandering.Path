@@ -1,4 +1,4 @@
-# SUBSCRIBED 
+# SUBSCRIBED https://raw.githubusercontent.com/abrclano/stach-rules/main/NetEaseMusic.stoverride
 name: 网易云音乐解锁
 desc: 解锁灰色歌曲与VIP，请在网易云音乐策略组中选择解锁节点，节点来源于网络
 
