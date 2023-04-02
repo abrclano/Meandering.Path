@@ -1,13 +1,6 @@
 # > NeteaseMusic Unlock List
 # > 2023.04.02
 proxies:
-  - name: unblockNetEase
-    type: ss
-    server: music.desperadoj.com
-    port: 30001
-    cipher: aes-128-gcm
-    password: desperadoj.com_free_proxy_etg0
-    
   - {"server":"music.desperadoj.com","port":30001,"cipher":"aes-128-gcm","password":"desperadoj.com_free_proxy_etg0","tfo":false,"udp":false,"name":"unblockNetEase","type":"ss"}
   - {"server":"101.132.192.212","port":30003,"cipher":"aes-128-gcm","password":"desperadoj.com_free_proxy_etg0","tfo":false,"udp":false,"name":"NeteaseMusic Unlock 1","type":"ss"}
   - {"server":"101.132.79.113","port":23333,"tfo":false,"udp":false,"name":"NeteaseMusic Unlock 2","type":"http"}
@@ -18,3 +11,10 @@ proxies:
   - {"server":"pc.tencentcdn.net","port":35000,"tls":false,"tfo":false,"udp":false,"name":"NeteaseMusic Unlock 7","type":"http"}
   - {"server":"119.176.253.89","port":9080,"tls":false,"tfo":false,"udp":false,"name":"NeteaseMusic Unlock 8","type":"http"}
   - {"server":"azgw.kevinxiao.cf","port":70,"tls":false,"tfo":false,"udp":false,"name":"NeteaseMusic Unlock 9","type":"http"}
+
+  - name: unblockNetEase
+    type: ss
+    server: music.desperadoj.com
+    port: 30001
+    cipher: aes-128-gcm
+    password: desperadoj.com_free_proxy_etg0
