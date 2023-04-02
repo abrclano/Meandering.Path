@@ -19,7 +19,7 @@ proxy-groups:
     url: http://apm3.music.163.com
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netease_Music.png
     use:
-      - UnblockMusic
+      - NeteaseMusic
     proxies:
       - DIRECT
 
