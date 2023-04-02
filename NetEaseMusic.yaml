@@ -1,10 +1,9 @@
 # > NeteaseMusic Unlock List
 # > 2023.04.02
 proxies:
-  - name: UnlockNeteaseMusic
+  - name: 🎶 解锁
     type: ss
     server: music.desperadoj.com
     port: 30001
     cipher: aes-128-gcm
     password: desperadoj.com_free_proxy_etg0
-    
