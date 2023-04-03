@@ -1,1 +1,42 @@
+# SUBSCRIBED https://raw.githubusercontent.com/abrclano/stach-rules/main/NetEaseMusic.stoverride
+name: UnblockNetEaseMusic
+desc: 解锁灰色歌曲与VIP，请在网易云音乐策略组中选择解锁节点，节点来源于网络
 
+proxy-providers:
+  NeteaseMusic:
+    type: http
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/abrclano/stach-rules/main/NetEaseMusic.yaml"
+    path: ./Proxy/NeteaseMusic.yaml
+    interval: 3600
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+            
+proxy-groups:
+  - name: NetEaseMusic
+    type: select
+    url: http://www.gstatic.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netease_Music.png
+    use:
+      - NeteaseMusic
+    proxies:
+      - DIRECT
+
+rule-providers:
+  NeteaseMusic:
+    type: http
+    behavior: classical
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/DesperadoJ/Rules-for-UnblockNeteaseMusic/master/Clash/RuleSet/NeteaseMusic.yaml"
+    path: ./RuleSet/NeteaseMusic.yaml
+    interval: 86400
+
+rules:
+  # Netease Music Advertising
+  - DOMAIN,admusicpic.music.126.net,REJECT
+  - DOMAIN,iadmat.nosdn.127.net,REJECT
+  - DOMAIN,iadmusicmat.music.126.net,REJECT
+  - DOMAIN,iadmusicmatvideo.music.126.net,REJECT
+
+  # Netease Music
+  - RULE-SET,NeteaseMusic,NetEaseMusic
