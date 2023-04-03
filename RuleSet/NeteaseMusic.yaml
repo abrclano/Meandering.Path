@@ -1,6 +1,7 @@
 payload:
   # Netease Music
   # 仅用于LyricEase及HYplayer等第三方客户端
+  - DOMAIN,musicupload.netease.com
   - DOMAIN,apm3.music.163.com
   - DOMAIN,apm.music.163.com
   - DOMAIN,interface3.music.163.com
