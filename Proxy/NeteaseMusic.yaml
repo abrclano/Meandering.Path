@@ -1,0 +1,7 @@
+proxies:
+  - name: 🎵 UNM
+    type: ss
+    server: music.desperadoj.com
+    port: 30001
+    cipher: aes-128-gcm
+    password: desperadoj.com_free_proxy_etg0
