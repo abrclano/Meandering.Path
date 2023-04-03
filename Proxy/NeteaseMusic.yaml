@@ -6,18 +6,12 @@ proxies:
     cipher: aes-128-gcm
     password: desperadoj.com_free_proxy_etg0
   - name: 🎶 UNM II
+    type: ss
+    server: music.desperadoj.com
+    port: 30003
+    cipher: aes-128-gcm
+    password: desperadoj.com_free_proxy_etg0
+  - name: 🎶 UNM III(慎用)
     type: http
     server: 155.248.169.205
     port: 70
-  - name: 🎶 UNM II
-    type: http
-    server: music.swcc.xyz
-    port: 9080
-  - name: 🎶 UNM IV
-    type: http
-    server: pc.tencentcdn.net
-    port: 30500
-  - name: 🎶 UNM V
-    type: http
-    server: os.tencentcdn.net
-    port: 25000
