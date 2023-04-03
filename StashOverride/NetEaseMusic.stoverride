@@ -1,11 +1,11 @@
-# SUBSCRIBED https://raw.githubusercontent.com/abrclano/stach-rules/main/NetEaseMusic.stoverride
+# SUBSCRIBED https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/StashOverride/NetEaseMusic.stoverride
 name: UnblockNetEaseMusic
 desc: 解锁灰色歌曲与VIP，请在网易云音乐策略组中选择解锁节点，节点来源于网络
 
 proxy-providers:
   NeteaseMusic:
     type: http
-    url: "https://ghproxy.com/https://raw.githubusercontent.com/abrclano/stach-rules/main/NetEaseMusic.yaml"
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/Proxy/NeteaseMusic.yaml"
     path: ./Proxy/NeteaseMusic.yaml
     interval: 3600
     health-check:
@@ -16,7 +16,7 @@ proxy-providers:
 proxy-groups:
   - name: NetEaseMusic
     type: select
-    url: http://www.gstatic.com/generate_204
+    url: https://music.163.com
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netease_Music.png
     use:
       - NeteaseMusic
@@ -27,7 +27,7 @@ rule-providers:
   NeteaseMusic:
     type: http
     behavior: classical
-    url: "https://ghproxy.com/https://raw.githubusercontent.com/DesperadoJ/Rules-for-UnblockNeteaseMusic/master/Clash/RuleSet/NeteaseMusic.yaml"
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/RuleSet/NeteaseMusic.yaml"
     path: ./RuleSet/NeteaseMusic.yaml
     interval: 86400
 
