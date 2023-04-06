@@ -31,7 +31,3 @@ proxies:
     password: desperadoj.com_free_proxy_etg0
     tfo: false
     udp: false
-  - name: 🎶 UNM III(慎用)
-    type: http
-    server: 155.248.169.205
-    port: 70
