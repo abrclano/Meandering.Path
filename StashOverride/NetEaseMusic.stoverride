@@ -30,14 +30,6 @@ rule-providers:
     path: ./RuleSet/NeteaseMusic.yaml
     interval: 86400
 
-http:
-  mitm:
-    - apm3.music.163.com
-    - apm.music.163.com
-    - interface3.music.163.com
-    - interface3.music.163.com.163jiasu.com
-    - interface.music.163.com
-    - music.163.com
 rules:
   # Netease Music
   - RULE-SET,NeteaseMusic,NetEaseMusic
