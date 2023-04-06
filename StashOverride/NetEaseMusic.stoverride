@@ -1,4 +1,3 @@
-# SUBSCRIBED https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/StashOverride/NetEaseMusic.stoverride
 name: UnblockNetEaseMusic
 desc: 解锁灰色歌曲与VIP，请在网易云音乐策略组中选择解锁节点，节点来源于网络
 
@@ -16,7 +15,7 @@ proxy-providers:
 proxy-groups:
   - name: NetEaseMusic
     type: select
-    url: apm3.music.163.com
+    url: http://apm3.music.163.com
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netease_Music.png
     use:
       - NeteaseMusic
@@ -32,11 +31,5 @@ rule-providers:
     interval: 86400
 
 rules:
-  # Netease Music Advertising
-  - DOMAIN,admusicpic.music.126.net,REJECT
-  - DOMAIN,iadmat.nosdn.127.net,REJECT
-  - DOMAIN,iadmusicmat.music.126.net,REJECT
-  - DOMAIN,iadmusicmatvideo.music.126.net,REJECT
-
   # Netease Music
   - RULE-SET,NeteaseMusic,NetEaseMusic
