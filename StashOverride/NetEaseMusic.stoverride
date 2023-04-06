@@ -16,7 +16,7 @@ proxy-providers:
 proxy-groups:
   - name: NetEaseMusic
     type: select
-    url: https://music.163.com
+    url: apm3.music.163.com
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netease_Music.png
     use:
       - NeteaseMusic
