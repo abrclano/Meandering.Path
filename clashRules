@@ -1,0 +1,434 @@
+parsers: # array
+  # - reg: ^.*$ 匹配所有订阅，或  - url: https://example.com/profile.yaml 指定订阅
+  - reg: ^.*$
+  # 删除服务商提供的策略组和规则
+    code: |
+      module.exports.parse = (raw, { yaml }) => {
+        const rawObj = yaml.parse(raw)
+        const groups = []
+        const rules = []
+        return yaml.stringify({ ...rawObj, 'proxy-groups': groups, rules })
+      } 
+
+  # 建立自己的配置
+    yaml:
+
+      append-proxies:
+        - name: 🎶 UNM I
+          type: ss
+          server: 101.132.192.212
+          port: 30001
+          cipher: aes-128-gcm
+          password: desperadoj.com
+          tfo: false
+          udp: false
+        - name: 🎶 UNM II
+          type: ss
+          server: 101.132.192.212
+          port: 30003
+          cipher: aes-128-gcm
+          password: desperadoj.com
+          tfo: false
+          udp: false
+        - name: 🎶 UNM III
+          type: ss
+          server: music.desperadoj.com
+          port: 30001
+          cipher: aes-128-gcm
+          password: desperadoj.com
+          tfo: false
+          udp: false
+        - name: 🎶 UNM IV
+          type: ss
+          server: music.desperadoj.com
+          port: 30003
+          cipher: aes-128-gcm
+          password: desperadoj.com
+          tfo: false
+          udp: false
+
+      prepend-proxy-groups: # 建立策略组
+        - name: 🎏 Proxy mode
+          type: select
+          proxies:
+            - 💊 GFWlist # 黑名单模式，意为「只有命中规则的网络流量，才使用代理」
+            - 🩹 Whitelist # 白名单模式，意为「没有命中规则的网络流量，统统使用代理」
+        
+        - name: 🚀 PROXY
+          type: select
+
+        - name: 🎮 Steam 
+          type: select
+          proxies: &M
+            - 🎯 DIRECT
+            - 🚀 PROXY
+            - ♻️ Auto
+            - ⚖️ Balance
+            - 🛠️ Failover
+            - HK 香港
+            - TW 台湾 
+            - US 美国 
+            - JP 日本 
+            - SG 狮城
+            - KR 韩国
+            - UK 英国
+            - DE 德国 
+            - IN 印度 
+         
+        - name: 🍻 BiliBili 
+          type: select
+          proxies:
+            - 🎯 DIRECT
+            - HK 香港
+            - TW 台湾 
+
+        - name: 🍷 Youtube
+          type: select
+          proxies:
+            *M
+
+        - name: 🎵 UnblockMusic
+          type: select
+          url: music.163.com
+          proxies:
+            - 🎯 DIRECT
+            - 🎶 UNM I
+            - 🎶 UNM II
+            - 🎶 UNM III
+            - 🎶 UNM IV
+            
+        - name: ⚛️ GitHub
+          type: select
+          proxies:
+            *M
+
+        - name: 📲 Telegram 
+          type: select
+          proxies:
+            *M
+
+        - name: 🍸 Bing
+          type: select
+          proxies:
+            *M
+
+        - name: 🤖 OpenAI 
+          type: select
+          proxies:
+            *M
+
+        - name: ✨ Google 
+          type: select
+          proxies: 
+            *M
+
+        - name: Ⓜ️ Microsoft 
+          type: select
+          proxies:
+            *M
+
+        - name: 🍎 Apple
+          type: select
+          proxies:
+            *M
+
+        - name: ⛔ AdBlock
+          type: select
+          proxies:
+            - 🎯 DIRECT
+            - 🛑 REJECT
+            - 🚀 PROXY
+
+        - name: HK 香港 
+          type: url-test
+          url: http://www.gstatic.com/generate_204
+          interval: 180
+          tolerance: 30
+
+        - name: TW 台湾 
+          type: url-test
+          url: http://www.gstatic.com/generate_204
+          interval: 180
+          tolerance: 30
+
+        - name: US 美国 
+          type: url-test
+          url: http://www.gstatic.com/generate_204
+          interval: 180
+          tolerance: 30
+
+        - name: JP 日本 
+          type: url-test
+          url: http://www.gstatic.com/generate_204
+          interval: 180
+          tolerance: 30
+
+        - name: SG 狮城 
+          type: url-test
+          url: http://www.gstatic.com/generate_204
+          interval: 180
+          tolerance: 30
+
+        - name: KR 韩国
+          type: url-test
+          url: http://www.gstatic.com/generate_204
+          interval: 180
+          tolerance: 30
+
+        - name: UK 英国
+          type: url-test
+          url: http://www.gstatic.com/generate_204
+          interval: 180
+          tolerance: 30
+
+        - name: DE 德国 
+          type: url-test
+          url: http://www.gstatic.com/generate_204
+          interval: 180
+          tolerance: 30
+
+        - name: IN 印度 
+          type: url-test
+          url: http://www.gstatic.com/generate_204
+          interval: 180
+          tolerance: 30
+
+        - name: 💊 GFWlist
+          type: url-test
+          url: http://www.gstatic.com/generate_204
+          interval: 300
+          proxies:
+            - 🎯 DIRECT
+            
+        - name: 🩹 Whitelist
+          type: url-test
+          url: http://www.gstatic.com/generate_204
+          interval: 300
+          proxies:
+            - 🚀 PROXY
+
+        - name: 🎯 DIRECT
+          type: url-test
+          url: http://www.gstatic.com/generate_204
+          interval: 86400
+          proxies:
+            - DIRECT
+
+        - name: ♻️ Auto 
+          type: url-test
+          url: http://www.gstatic.com/generate_204
+          interval: 180
+          tolerance: 30
+
+        - name: ⚖️ Balance
+          type: load-balance
+          url: http://www.gstatic.com/generate_204
+          interval: 180
+          tolerance: 30
+
+        - name: 🛠️ Failover 
+          type: fallback
+          url: http://www.gstatic.com/generate_204
+          interval: 180
+          tolerance: 30
+  
+        - name: 🛑 REJECT
+          type: url-test
+          url: http://www.gstatic.com/generate_204
+          interval: 86400
+          proxies:
+            - REJECT
+          
+      # 策略组示例
+       # - name: 分组名
+         # type: select       # 手动选点   
+               # url-test     # 自动选择延迟最低的节点
+               # fallback     # 节点故障时自动切换下一个
+               # laod-balance # 均衡使用分组内的节点
+         # url: http://www.gstatic.com/generate_204 # 测试地址 非select类型分组必要
+         # interval: 300 # 自动测试间隔时间，单位秒 非select类型分组必要
+         # tolerance: 50 # 允许的偏差，节点之间延迟差小于该值不切换 非必要
+         # proxies:  
+           # - 节点名称或其他分组套娃
+          
+      commands:
+        - proxy-groups.🚀 PROXY.proxies=[]proxyNames|^((?!UNM).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.🚀 PROXY.proxies.0+🎯 DIRECT # 向指定分组添加一个 🎯 DIRECT 节点名
+        - proxy-groups.🚀 PROXY.proxies.1+♻️ Auto # 向指定分组添加一个 ♻️ Auto 节点名
+        - proxy-groups.🚀 PROXY.proxies.2+⚖️ Balance # 向指定分组添加一个 ⚖️ Balance 节点名
+        - proxy-groups.🚀 PROXY.proxies.3+🛠️ Failover # 向指定分组添加一个 🛠️ Failover 节点名
+        - proxy-groups.♻️ Auto.proxies=[]proxyNames|^((?!UNM).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.⚖️ Balance.proxies=[]proxyNames|^((?!UNM).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.🛠️ Failover.proxies=[]proxyNames|^((?!UNM).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.HK 香港.proxies=[]proxyNames|^(.*)(香港|Hong Kong)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.TW 台湾.proxies=[]proxyNames|^(.*)(台湾|Taiwan)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.US 美国.proxies=[]proxyNames|^(.*)(美国|United States)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.JP 日本.proxies=[]proxyNames|^(.*)(日本|Japan)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.KR 韩国.proxies=[]proxyNames|^(.*)(韩国|Korea)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.SG 狮城.proxies=[]proxyNames|^(.*)(新加坡|Singapore)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.UK 英国.proxies=[]proxyNames|^(.*)(英国|United Kingdom)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.DE 德国.proxies=[]proxyNames|^(.*)(德国|Germany)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.IN 印度.proxies=[]proxyNames|^(.*)(印度|India)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        
+        # 一些可能用到的正则过滤节点示例，使分组更细致
+        # []proxyNames|a                         # 包含a
+        # []proxyNames|^(.*)(a|b)+(.*)$          # 包含a或b
+        # []proxyNames|^(?=.*a)(?=.*b).*$        # 包含a和b
+        # []proxyNames|^((?!b).)*a((?!b).)*$     # 包含a且不包含b
+        # []proxyNames|^((?!b|c).)*a((?!b|c).)*$ # 包含a且不包含b或c
+
+      prepend-rules: # 规则由上往下遍历，如上面规则已经命中，则不再往下处理
+        #规则集
+        - DOMAIN,clash.razord.top,🎯 DIRECT
+        - DOMAIN,yacd.haishan.me,🎯 DIRECT
+        - RULE-SET,NetEaseMusic,🎵 UnblockMusic
+        - RULE-SET,Steam,🎮 Steam
+        - RULE-SET,GitHub,⚛️ GitHub
+        - RULE-SET,Bing,🍸 Bing
+        - RULE-SET,Apple,🍎 Apple
+        - RULE-SET,Youtube,🍷 Youtube
+        - RULE-SET,OpenAI,🤖 OpenAI 
+        - RULE-SET,BiliBili,🍻 BiliBili
+        - RULE-SET,telegramcidr,📲 Telegram
+        - RULE-SET,Microsoft,Ⓜ️ Microsoft
+        - RULE-SET,Google,✨ Google
+        - RULE-SET,applications,🎯 DIRECT
+        - RULE-SET,private,🎯 DIRECT
+        - RULE-SET,reject,⛔ AdBlock
+        - RULE-SET,lancidr,🎯 DIRECT
+        - RULE-SET,cncidr,🎯 DIRECT
+        - RULE-SET,tld-not-cn,🚀 PROXY
+        - RULE-SET,gfw,🚀 PROXY
+        - RULE-SET,greatfire,🚀 PROXY
+        - GEOIP,,🎯 DIRECT
+        - GEOIP,CN,🎯 DIRECT
+        - RULE-SET,direct,🎯 DIRECT
+        - RULE-SET,proxy,🎏 Proxy mode
+        - MATCH,🎏 Proxy mode
+
+      mix-rule-providers: # 添加规则集
+          reject:
+            type: http
+            behavior: domain
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
+            interval: 86400
+
+          proxy:
+            type: http
+            behavior: domain
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt"
+            interval: 86400
+
+          direct:
+            type: http
+            behavior: domain
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt"
+            interval: 86400
+
+          private:
+            type: http
+            behavior: domain
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt"
+            interval: 86400
+
+          gfw:
+            type: http
+            behavior: domain
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/gfw.txt"
+            interval: 86400
+
+          greatfire:
+            type: http
+            behavior: domain
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/greatfire.txt"
+            interval: 86400
+
+          tld-not-cn:
+            type: http
+            behavior: domain
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt"
+            interval: 86400
+            
+          cncidr:
+            type: http
+            behavior: ipcidr
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt"
+            interval: 86400
+
+          telegramcidr:
+            type: http
+            behavior: ipcidr
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/telegramcidr.txt"
+            interval: 86400
+
+          lancidr:
+            type: http
+            behavior: ipcidr
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/lancidr.txt"
+            interval: 86400
+
+          applications:
+            type: http
+            behavior: classical
+            url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/applications.txt"
+            interval: 86400
+
+          Microsoft:
+            type: http
+            behavior: classical
+            url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml"
+            interval: 86400
+
+          Bing:
+            type: http
+            behavior: classical
+            url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bing/Bing.yaml"
+            interval: 86400
+            
+          Google:
+            type: http
+            behavior: classical
+            url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml"
+            interval: 86400
+
+          Apple:
+            type: http
+            behavior: classical
+            url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple.yaml"
+            interval: 86400
+
+          OpenAI:
+            type: http
+            behavior: classical
+            url: "https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Stash/RuleSet/OpenAI.yaml"
+            interval: 86400
+
+          Youtube:
+            type: http
+            behavior: classical
+            url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTube/YouTube.yaml"
+            interval: 86400 
+
+          BiliBili:
+            type: http
+            behavior: classical
+            url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BiliBili/BiliBili.yaml"
+            interval: 86400
+
+          GitHub:
+            type: http
+            behavior: classical
+            url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml"
+            interval: 86400
+
+          Steam:
+            type: http
+            behavior: classical
+            url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Steam/Steam.yaml"
+            interval: 86400
+
+          NetEaseMusic:
+            type: http
+            behavior: classical
+            url: "https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/RuleSet/NeteaseMusic.yaml"
+            interval: 86400
