@@ -4,7 +4,7 @@ desc: 解锁灰色歌曲与VIP，请在网易云音乐策略组中选择解锁�
 proxy-providers:
   NeteaseMusic:
     type: http
-    url: "https://ghproxy.com/https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/Proxy/NeteaseMusic.yaml"
+    url: https://ghproxy.com/https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/Proxy/NeteaseMusic.yaml
     path: ./Proxy/NeteaseMusic.yaml
     interval: 3600
     health-check:
@@ -26,7 +26,7 @@ rule-providers:
   NeteaseMusic:
     type: http
     behavior: classical
-    url: "https://ghproxy.com/https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/StashOverride/NetEaseMusic.yaml"
+    url: https://ghproxy.com/https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/StashOverride/NetEaseMusic.yaml
     path: ./RuleSet/NeteaseMusic.yaml
     interval: 86400
 
