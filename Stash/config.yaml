@@ -1,0 +1,433 @@
+# 下载配置后,请手动添加机场订阅
+# 找到 {远程订阅} 部分，将MyProxy 部分的 url替换为自己的机场订阅链接  
+
+subscribe-url: https://newhua99.com/api/v1/client/subscribe?token=e34d77e434b40defd366aa3672e954f3
+# 替换上面文字用于Stash获取机场流量信息并在主页显示
+
+#混合端口
+mixed-port: 7890
+#允许局域网
+allow-lan: true
+#绑定地址
+bind-address: '*'
+#模式:rule（规则） / global（全局代理）/ direct（全局直连）
+mode: Rule
+#日志级别（日志输出级别：分级如后silent / info / warning / error / debug级别越高日志输出量越大）
+log-level: silent
+#外部控制器
+external-controller: 127.0.0.1:9090
+
+#DNS设置
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  #DNS服务器
+  default-nameserver:
+    - 119.29.29.29
+    - 119.28.28.28
+    - 223.5.5.5
+    - 114.114.114.114
+  #DoH服务器
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.dns.sb/dns-query
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  #列表中的域名将不会被解析为fake ip，这些域名相关的解析请求将会返回它们真实的IP地址
+  fake-ip-filter:
+    - '*.lan'
+    - localhost.ptlogin2.qq.com
+    - '+.srv.nintendo.net'
+    - '+.stun.playstation.net'
+    - '+.msftconnecttest.com'
+    - '+.msftncsi.com'
+    - '+.xboxlive.com'
+    - 'msftconnecttest.com'
+    - 'xbox.*.microsoft.com'
+    - '*.battlenet.com.cn'
+    - '*.battlenet.com'
+    - '*.blzstatic.cn'
+    - '*.battle.net'
+
+#本地代理
+proxies:
+
+#远程订阅
+proxy-providers:
+
+  MyProxy: &MyProxy #建立锚点
+    url: "https://newhua99.com/api/v1/client/subscribe?token=e34d77e434b40defd366aa3672e954f3"
+    # 使用Clash类型订阅链接替换掉引号""内的链接使用。
+    # 或可使用通用订阅链接通过Sub-Store进行订阅转换。
+    interval: 86400
+    health-check:
+      enable: true
+      interval: 3600
+      url: http://cp.cloudflare.com/generate_204
+   
+  #美国节点
+  MyProxy-US:
+    <<: *MyProxy #引用锚点内容
+    filter: "美|🇺🇲|US|(?i)States|American"
+ 
+  #香港节点
+  MyProxy-HK:
+    <<: *MyProxy #引用锚点内容
+    filter: "港|🇭🇰|HK|(?i)Hong"
+ 
+  #日本节点
+  MyProxy-JP:
+    <<: *MyProxy #引用锚点内容
+    filter: "日|🇯🇵|东京|JP|(?i)Japan"
+ 
+  #台湾节点
+  MyProxy-TW:
+    <<: *MyProxy #引用锚点内容
+    filter: "台|🇨🇳|湾|TW|(?i)Taiwan"
+ 
+  #新加坡节点
+  MyProxy-SG:
+    <<: *MyProxy #引用锚点内容
+    filter: "新加坡|坡|狮城|🇸🇬|SG|(?i)Singapore"
+
+#策略组
+proxy-groups:
+
+  - name: Proxy
+    type: select
+    use:
+      - MyProxy
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png
+
+  - name: 全球
+    type: select
+    proxies: &G
+      - Proxy
+      - 自动选择
+      - Fallback
+      - US 美国
+      - HK 香港
+      - JP 日本
+      - TW 台湾
+      - SG 新加坡
+      - 漏网之鱼
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png
+ 
+  - name: 国外媒体
+    type: select
+    proxies:
+      *G
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Media.png
+ 
+  - name: Netflix
+    type: select
+    proxies:
+      *G
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png
+ 
+  - name: Disney+
+    type: select
+    proxies:
+      *G
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney.png
+ 
+  - name: HBO
+    type: select
+    proxies:
+      *G
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/HBO.png
+ 
+  - name: Youtube
+    type: select
+    proxies:
+      *G
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+ 
+  - name: Spotify
+    type: select
+    proxies:
+      *G
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
+ 
+  - name: TikTok
+    type: select
+    proxies:
+      *G
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
+ 
+  - name: Bilibili
+    type: select
+    proxies:
+      - DIRECT
+      - HK 香港
+      - TW 台湾
+    icon: https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Bilibili.png
+ 
+  - name: Telegram
+    type: select
+    proxies:
+      *G
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+ 
+  - name: Twitter
+    type: select
+    proxies:
+      *G
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
+ 
+  - name: PayPal
+    type: select
+    proxies:
+      *G
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png
+ 
+  - name: TestFlight
+    type: select
+    proxies:
+      *G
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TestFlight.png
+ 
+  - name: Apple
+    type: select
+    proxies:
+      *G
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
+ 
+  - name: Google
+    type: select
+    proxies:
+      *G
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google.png
+ 
+  - name: Microsoft
+    type: select
+    proxies:
+      *G
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
+
+  - name: ChatGPT
+    type: select
+    proxies:
+      *G
+    icon: https://gitlab.com/lodepuly/iconlibrary/-/raw/master/Website_icon/80px/OpenAI.png
+ 
+  - name: 中国大陆
+    type: select
+    proxies:
+      - DIRECT
+      - Proxy
+      - 自动选择
+      - Fallback
+      - US 美国
+      - HK 香港
+      - JP 日本
+      - TW 台湾
+      - SG 新加坡
+      - 漏网之鱼
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Heart.png
+ 
+  - name: 漏网之鱼
+    type: select
+    proxies:
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Pig.png
+
+  - name: 自动选择
+    type: url-test
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+    use:
+       - MyProxy
+    url: "http://cp.cloudflare.com/generate_204"
+    interval: 300
+
+  - name: Fallback
+    type: fallback
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available.png
+    use:
+      - MyProxy
+    url: "http://cp.cloudflare.com/generate_204"
+    interval: 300
+
+  - name: US 美国
+    type: url-test
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+    use:
+      - MyProxy-US
+    url: "http://cp.cloudflare.com/generate_204"
+    interval: 300
+
+  - name: HK 香港
+    type: url-test
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
+    use:
+      - MyProxy-HK
+    url: "http://cp.cloudflare.com/generate_204"
+    interval: 300
+ 
+  - name: JP 日本
+    type: url-test
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
+    use:
+      - MyProxy-JP
+    url: "http://cp.cloudflare.com/generate_204"
+    interval: 300
+ 
+  - name: TW 台湾
+    type: url-test
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png
+    use:
+      - MyProxy-TW
+    url: "http://cp.cloudflare.com/generate_204"
+    interval: 300
+ 
+  - name: SG 新加坡
+    type: url-test
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+    use:
+      - MyProxy-SG
+    url: "http://cp.cloudflare.com/generate_204"
+    interval: 300
+ 
+#远程规则集合
+rule-providers:
+
+  ChatGPT-rules:
+    behavior: classical
+    interval: 86400
+    name: ChatGPT
+    url: https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Stash/RuleSet/OpenAI.yaml
+   
+  Netflix-rules:
+    behavior: classical
+    interval: 86400
+    name: Netflix
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Netflix/Netflix.yaml
+
+  Disney-rules:
+    behavior: classical
+    interval: 86400
+    name: Disney
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Disney/Disney.yaml
+
+  HBO-rules:
+    behavior: classical
+    interval: 86400
+    name: HBO
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/HBO/HBO.yaml
+
+  Youtube-rules:
+    behavior: classical
+    interval: 86400
+    name: Youtube
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/YouTube/YouTube.yaml
+
+  Spotify-rules:
+    behavior: classical
+    interval: 86400
+    name: Spotify
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Spotify/Spotify.yaml
+
+  TikTok-rules:
+    behavior: classical
+    interval: 86400
+    name: TikTok
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/TikTok/TikTok.yaml
+
+  Bilibili-rules:
+    behavior: classical
+    interval: 86400
+    name: Bilibili
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/BiliBili/BiliBili.yaml
+
+  Telegram-rules:
+    behavior: classical
+    interval: 86400
+    name: Telegram
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Telegram/Telegram.yaml
+
+  Twitter-rules:
+    behavior: classical
+    interval: 86400
+    name: Twitter
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Twitter/Twitter.yaml
+
+  PayPal-rules:
+    behavior: classical
+    interval: 86400
+    name: PayPal
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/PayPal/PayPal.yaml
+
+  TestFlight-rules:
+    behavior: classical
+    interval: 86400
+    name: TestFlight
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/TestFlight/TestFlight.yaml
+
+  Apple-rules:
+    behavior: classical
+    interval: 86400
+    name: Apple
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Apple/Apple.yaml
+
+  Google-rules:
+    behavior: classical
+    interval: 86400
+    name: Google
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Google/Google.yaml
+
+  Microsoft-rules:
+    behavior: classical
+    interval: 86400
+    name: Microsoft
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Microsoft/Microsoft.yaml
+
+  Mainland-rules:
+    behavior: classical
+    interval: 86400
+    name: Mainland
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/China/China.yaml
+
+  MainlandIP-rules:
+    behavior: ipcidr
+    interval: 86400
+    name: MainlandIP
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/ChinaIPs/ChinaIPs_IP.yaml
+
+  Global-rules:
+    behavior: classical
+    interval: 86400
+    name: Outside
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Global/Global_Classical.yaml
+
+  ASN-rules:
+    behavior: classical
+    interval: 86400
+    name: ASN
+    url: https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Stash/RuleSet/ASN_China.yaml
+
+#分流规则引用
+rules:
+  - RULE-SET,ChatGPT-rules,ChatGPT
+  - RULE-SET,Netflix-rules,Netflix
+  - RULE-SET,Disney-rules,Disney+
+  - RULE-SET,HBO-rules,HBO
+  - RULE-SET,Youtube-rules,Youtube
+  - RULE-SET,Spotify-rules,Spotify
+  - RULE-SET,TikTok-rules,TikTok
+  - RULE-SET,Bilibili-rules,Bilibili
+  - RULE-SET,Telegram-rules,Telegram
+  - RULE-SET,Twitter-rules,Twitter
+  - RULE-SET,PayPal-rules,PayPal
+  - RULE-SET,TestFlight-rules,TestFlight
+  - RULE-SET,Apple-rules,Apple
+  - RULE-SET,Google-rules,Google
+  - RULE-SET,Microsoft-rules,Microsoft
+  - RULE-SET,Mainland-rules,中国大陆
+  - RULE-SET,MainlandIP-rules,中国大陆
+  - RULE-SET,Global-rules,Proxy
+# ASN China 规则，如需自行删除注释启用，同时把Mainland-rules、MainlandIP-rules及GEOIP注释。
+  #- RULE-SET,ASN-rules,DIRECT
+  - GEOIP,CN,DIRECT
+  - MATCH,漏网之鱼
