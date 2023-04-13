@@ -30,7 +30,7 @@ dns:
   #DoH服务器
   nameserver:
     - https://dns.alidns.com/dns-query
-    - https://doh.dns.sb/dns-query
+    - https://doh.pub/dns-query
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   #列表中的域名将不会被解析为fake ip，这些域名相关的解析请求将会返回它们真实的IP地址
