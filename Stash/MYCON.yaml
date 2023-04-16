@@ -473,7 +473,7 @@ rules:
   - RULE-SET,Spotify,Spotify
   - RULE-SET,TikTok,TikTok
   - RULE-SET,Bilibili,Bilibili
-  - RULE-SET,Telegram,Telegram
+  - RULE-SET,Telegramcidr,Telegram
   - RULE-SET,Twitter,Twitter
   - RULE-SET,PayPal,PayPal
   - RULE-SET,TestFlight,TestFlight
