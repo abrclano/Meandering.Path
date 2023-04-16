@@ -26,7 +26,7 @@ rule-providers:
   NeteaseMusic:
     type: http
     behavior: classical
-    url: https://ghproxy.com/https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/RuleSet/NeteaseMusic.yaml
+    url: https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/RuleSet/NeteaseMusic.yaml
     path: ./RuleSet/NeteaseMusic.yaml
     interval: 86400
 
