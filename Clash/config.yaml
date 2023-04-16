@@ -60,7 +60,7 @@ parsers: # array
           proxies:
             *M
 
-        - name: 🎵 UnblockMusic
+        - name: 🎵 UnblockMusic #解锁网易云音乐，如需使用，请自行在append-proxies处添加节点信息
           type: select
           url: music.163.com
           proxies:
