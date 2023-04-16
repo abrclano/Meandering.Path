@@ -311,151 +311,151 @@ proxy-groups:
 #远程规则集合
 rule-providers:
 
-  ChatGPT-rules:
+  ChatGPT:
     behavior: classical
     interval: 86400
     name: ChatGPT
     url: https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Stash/RuleSet/OpenAI.yaml
 
-  Netflix-rules:
+  Netflix:
     behavior: classical
     interval: 86400
     name: Netflix
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Netflix/Netflix.yaml
 
-  Disney-rules:
+  Disney:
     behavior: classical
     interval: 86400
     name: Disney
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Disney/Disney.yaml
 
-  HBO-rules:
+  HBO:
     behavior: classical
     interval: 86400
     name: HBO
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/HBO/HBO.yaml
 
-  Youtube-rules:
+  Youtube:
     behavior: classical
     interval: 86400
     name: Youtube
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/YouTube/YouTube.yaml
 
-  Spotify-rules:
+  Spotify:
     behavior: classical
     interval: 86400
     name: Spotify
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Spotify/Spotify.yaml
 
-  TikTok-rules:
+  TikTok:
     behavior: classical
     interval: 86400
     name: TikTok
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/TikTok/TikTok.yaml
 
-  Bilibili-rules:
+  Bilibili:
     behavior: classical
     interval: 86400
     name: Bilibili
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/BiliBili/BiliBili.yaml
 
-  Telegram-rules:
+  Telegramcidr:
     behavior: ipcidr
     interval: 86400
     name: Telegram
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/telegramcidr.txt
 
-  Twitter-rules:
+  Twitter:
     behavior: classical
     interval: 86400
     name: Twitter
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Twitter/Twitter.yaml
 
-  PayPal-rules:
+  PayPal:
     behavior: classical
     interval: 86400
     name: PayPal
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/PayPal/PayPal.yaml
 
-  TestFlight-rules:
+  TestFlight:
     behavior: classical
     interval: 86400
     name: TestFlight
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/TestFlight/TestFlight.yaml
 
-  Apple-rules:
+  Apple:
     behavior: classical
     interval: 86400
     name: Apple
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Apple/Apple.yaml
 
-  Google-rules:
+  Google:
     behavior: classical
     interval: 86400
     name: Google
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Google/Google.yaml
 
-  Microsoft-rules:
+  Microsoft:
     behavior: classical
     interval: 86400
     name: Microsoft
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Microsoft/Microsoft.yaml
 
-  GitHub-rules:
+  GitHub:
     behavior: classical
     interval: 86400
     name: GitHub
     url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml
 
-  reject-rules:
+  reject:
     behavior: domain
     interval: 86400
     name: reject
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt
 
-  proxy-rules:
+  proxy:
     behavior: domain
     interval: 86400
     name: proxy
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt
 
-  direct-rules:
+  direct:
     behavior: domain
     interval: 86400
     name: direct
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt
 
-  private-rules:
+  private:
     behavior: domain
     interval: 86400
     name: private
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt
 
-  gfw-rules:
+  gfw:
     behavior: domain
     interval: 86400
     name: gfw
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/gfw.txt
 
-  greatfire-rules:
+  greatfire:
     behavior: domain
     interval: 86400
     name: greatfire
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/greatfire.txt
 
-  tld-not-cn-rules:
+  tld-not-cn:
     behavior: domain
     interval: 86400
     name: tld-not-cn
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt
 
-  cncidr-rules:
+  cncidr:
     behavior: ipcidr
     interval: 86400
     name: cncidr
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt
 
-  lancidr-rules:
+  lancidr:
     behavior: ipcidr
     interval: 86400
     name: lancidr
@@ -464,31 +464,31 @@ rule-providers:
 
 #分流规则引用
 rules:
-  - RULE-SET,GitHub-rules,GitHub
-  - RULE-SET,ChatGPT-rules,ChatGPT
-  - RULE-SET,Netflix-rules,Netflix
-  - RULE-SET,Disney-rules,Disney+
-  - RULE-SET,HBO-rules,HBO
-  - RULE-SET,Youtube-rules,Youtube
-  - RULE-SET,Spotify-rules,Spotify
-  - RULE-SET,TikTok-rules,TikTok
-  - RULE-SET,Bilibili-rules,Bilibili
-  - RULE-SET,Telegram-rules,Telegram
-  - RULE-SET,Twitter-rules,Twitter
-  - RULE-SET,PayPal-rules,PayPal
-  - RULE-SET,TestFlight-rules,TestFlight
-  - RULE-SET,Apple-rules,Apple
-  - RULE-SET,Google-rules,Google
-  - RULE-SET,Microsoft-rules,Microsoft
-  - RULE-SET,private-rules,DIRECT
-  - RULE-SET,reject-rules,AdBlock
-  - RULE-SET,lancidr-rules,DIRECT
-  - RULE-SET,cncidr-rules,DIRECT
-  - RULE-SET,tld-not-cn-rules,Proxy
-  - RULE-SET,gfw-rules,Proxy
-  - RULE-SET,greatfire-rules,Proxy
+  - RULE-SET,GitHub,GitHub
+  - RULE-SET,ChatGPT,ChatGPT
+  - RULE-SET,Netflix,Netflix
+  - RULE-SET,Disney,Disney+
+  - RULE-SET,HBO,HBO
+  - RULE-SET,Youtube,Youtube
+  - RULE-SET,Spotify,Spotify
+  - RULE-SET,TikTok,TikTok
+  - RULE-SET,Bilibili,Bilibili
+  - RULE-SET,Telegram,Telegram
+  - RULE-SET,Twitter,Twitter
+  - RULE-SET,PayPal,PayPal
+  - RULE-SET,TestFlight,TestFlight
+  - RULE-SET,Apple,Apple
+  - RULE-SET,Google,Google
+  - RULE-SET,Microsoft,Microsoft
+  - RULE-SET,private,DIRECT
+  - RULE-SET,reject,AdBlock
+  - RULE-SET,lancidr,DIRECT
+  - RULE-SET,cncidr,DIRECT
+  - RULE-SET,tld-not-cn,Proxy
+  - RULE-SET,gfw,Proxy
+  - RULE-SET,greatfire,Proxy
   - GEOIP,,DIRECT
   - GEOIP,CN,DIRECT
-  - RULE-SET,direct-rules,DIRECT
-  - RULE-SET,proxy-rules,Proxy mode
+  - RULE-SET,direct,DIRECT
+  - RULE-SET,proxy,Proxy mode
   - MATCH,Proxy mode
