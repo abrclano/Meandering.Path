@@ -13,16 +13,16 @@ parsers: # array
   # 建立自己的配置
     yaml:
 
+      # 在proxies最后面增加一个服务
       append-proxies:
-        - name: 🎶 UNM
+        - name: 🎶 UNM I
           type: ss
-          server: 101.132.192.212
+          server: your server ip
           port: 30001
           cipher: aes-128-gcm
-          password: desperadoj.com
+          password: your server password
           tfo: false
           udp: false
-
 
       prepend-proxy-groups: # 建立策略组
         - name: 🎏 Proxy mode
@@ -47,10 +47,6 @@ parsers: # array
             - US 美国 
             - JP 日本 
             - SG 狮城
-            - KR 韩国
-            - UK 英国
-            - DE 德国 
-            - IN 印度 
          
         - name: 🍻 BiliBili 
           type: select
@@ -69,7 +65,7 @@ parsers: # array
           url: music.163.com
           proxies:
             - 🎯 DIRECT
-            - 🎶 UNM
+            - 🎶 UNM I
             
         - name: ⚛️ GitHub
           type: select
@@ -116,55 +112,32 @@ parsers: # array
         - name: HK 香港 
           type: url-test
           url: http://www.gstatic.com/generate_204
-          interval: 180
+          interval: 300
           tolerance: 30
+          filter: 'HK|香港'
 
         - name: TW 台湾 
           type: url-test
           url: http://www.gstatic.com/generate_204
-          interval: 180
+          interval: 300
           tolerance: 30
 
         - name: US 美国 
           type: url-test
           url: http://www.gstatic.com/generate_204
-          interval: 180
+          interval: 300
           tolerance: 30
 
         - name: JP 日本 
           type: url-test
           url: http://www.gstatic.com/generate_204
-          interval: 180
+          interval: 300
           tolerance: 30
 
         - name: SG 狮城 
           type: url-test
           url: http://www.gstatic.com/generate_204
-          interval: 180
-          tolerance: 30
-
-        - name: KR 韩国
-          type: url-test
-          url: http://www.gstatic.com/generate_204
-          interval: 180
-          tolerance: 30
-
-        - name: UK 英国
-          type: url-test
-          url: http://www.gstatic.com/generate_204
-          interval: 180
-          tolerance: 30
-
-        - name: DE 德国 
-          type: url-test
-          url: http://www.gstatic.com/generate_204
-          interval: 180
-          tolerance: 30
-
-        - name: IN 印度 
-          type: url-test
-          url: http://www.gstatic.com/generate_204
-          interval: 180
+          interval: 300
           tolerance: 30
 
         - name: 💊 GFWlist
@@ -191,19 +164,19 @@ parsers: # array
         - name: ♻️ Auto 
           type: url-test
           url: http://www.gstatic.com/generate_204
-          interval: 180
+          interval: 300
           tolerance: 30
 
         - name: ⚖️ Balance
           type: load-balance
           url: http://www.gstatic.com/generate_204
-          interval: 180
+          interval: 300
           tolerance: 30
 
         - name: 🛠️ Failover 
           type: fallback
           url: http://www.gstatic.com/generate_204
-          interval: 180
+          interval: 300
           tolerance: 30
   
         - name: 🛑 REJECT
@@ -226,23 +199,19 @@ parsers: # array
            # - 节点名称或其他分组套娃
           
       commands:
-        - proxy-groups.🚀 PROXY.proxies=[]proxyNames|^((?!UNM).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.🚀 PROXY.proxies.0+🎯 DIRECT # 向指定分组添加一个 🎯 DIRECT 节点名
-        - proxy-groups.🚀 PROXY.proxies.1+♻️ Auto # 向指定分组添加一个 ♻️ Auto 节点名
-        - proxy-groups.🚀 PROXY.proxies.2+⚖️ Balance # 向指定分组添加一个 ⚖️ Balance 节点名
-        - proxy-groups.🚀 PROXY.proxies.3+🛠️ Failover # 向指定分组添加一个 🛠️ Failover 节点名
-        - proxy-groups.♻️ Auto.proxies=[]proxyNames|^((?!UNM).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.⚖️ Balance.proxies=[]proxyNames|^((?!UNM).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.🛠️ Failover.proxies=[]proxyNames|^((?!UNM).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.🚀 PROXY.proxies=[]proxyNames|^((?!UNM|官网).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.🚀 PROXY.proxies.0+♻️ Auto # 向指定分组添加一个 ♻️ Auto 节点名
+        - proxy-groups.🚀 PROXY.proxies.1+⚖️ Balance # 向指定分组添加一个 ⚖️ Balance 节点名
+        - proxy-groups.🚀 PROXY.proxies.2+🛠️ Failover # 向指定分组添加一个 🛠️ Failover 节点名
+        - proxy-groups.♻️ Auto.proxies=[]proxyNames|^((?!UNM|官网).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.⚖️ Balance.proxies=[]proxyNames|^((?!UNM|官网).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.🛠️ Failover.proxies=[]proxyNames|^((?!UNM|官网).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
         - proxy-groups.HK 香港.proxies=[]proxyNames|^(.*)(香港|Hong Kong)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
         - proxy-groups.TW 台湾.proxies=[]proxyNames|^(.*)(台湾|Taiwan)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
         - proxy-groups.US 美国.proxies=[]proxyNames|^(.*)(美国|United States)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
         - proxy-groups.JP 日本.proxies=[]proxyNames|^(.*)(日本|Japan)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
         - proxy-groups.KR 韩国.proxies=[]proxyNames|^(.*)(韩国|Korea)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
         - proxy-groups.SG 狮城.proxies=[]proxyNames|^(.*)(新加坡|Singapore)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.UK 英国.proxies=[]proxyNames|^(.*)(英国|United Kingdom)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.DE 德国.proxies=[]proxyNames|^(.*)(德国|Germany)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.IN 印度.proxies=[]proxyNames|^(.*)(印度|India)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
         
         # 一些可能用到的正则过滤节点示例，使分组更细致
         # []proxyNames|a                         # 包含a
