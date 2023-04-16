@@ -1,1 +1,1 @@
-## 网络上搜寻的UnblockNetEaseMusic可用节点
+## 互联网上搜寻的UnblockNetEaseMusic可用节点，请勿滥用
