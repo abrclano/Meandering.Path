@@ -106,7 +106,7 @@ proxy-groups:
       - MyProxy
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png
 
-  - name: 国外媒体
+  - name: Youtube
     type: select
     proxies: &G
       - Proxy
@@ -119,12 +119,6 @@ proxy-groups:
       - TW 台湾
       - SG 新加坡
       - DIRECT
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Media.png
-
-  - name: Youtube
-    type: select
-    proxies:
-      *G
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
 
   - name: Netflix
