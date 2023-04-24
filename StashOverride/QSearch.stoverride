@@ -16,7 +16,7 @@ http:
     # gg xxx (Google)
     - ^https:\/\/duckduckgo.com\/\?q=gg(\+|%20)([^&]+).+ https://www.google.com/search?q=$2 302
 
-    # bi xxx (bing)
+    # b xxx (bing)
     - ^https:\/\/duckduckgo.com\/\?q=bi\+([^&]+).+ https://cn.bing.com/search?q=$1 302
 
     # gi xxx (Google image)
