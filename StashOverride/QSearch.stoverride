@@ -32,4 +32,4 @@ http:
     - ^https:\/\/duckduckgo.com\/\?q=x\+([^&]+).+ https://www.xvideos.com/?k=$1 302
     
     # h xxx (hanime)
-    - ^https:\/\/duckduckgo.com\/\?q=h\+([^&]+).+ https://www.hanimes.org 302
+    - ^https:\/\/duckduckgo.com\/\?q=h + https://www.hanimes.org 302
