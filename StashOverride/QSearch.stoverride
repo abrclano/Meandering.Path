@@ -2,28 +2,31 @@ name: QSearch
 desc: 聚合搜索引擎
 http:
   mitm:
-    - "bing.com"
+    - "duckduckgo.com"
   rewrite:
     # wiki xxx (Wikipedia)
-    - ^https:\/\/bing.com\/\?q=wiki(\+|%20)([^&]+).+ https://wikipedia.org/wiki/$2 302
+    - ^https:\/\/duckduckgo.com\/\?q=wiki(\+|%20)([^&]+).+ https://wikipedia.org/wiki/$2 302
 
     # wk xxx (Wikipedia ZH)
-    - ^https:\/\/bing.com\/\?q=wk(\+|%20)([^&]+).+ https://zh.wikipedia.org/wiki/$2 302
+    - ^https:\/\/duckduckgo.com\/\?q=wk(\+|%20)([^&]+).+ https://zh.wikipedia.org/wiki/$2 302
 
     # gh xxx (GitHub)
-    - ^https:\/\/bing.com\/\?q=gh(\+|%20)([^&]+).+ https://github.com/search?q=$2 302
+    - ^https:\/\/duckduckgo.com\/\?q=gh(\+|%20)([^&]+).+ https://github.com/search?q=$2 302
 
     # gg xxx (Google)
-    - ^https:\/\/bing.com\/\?q=gg(\+|%20)([^&]+).+ https://www.google.com/search?q=$2 302
+    - ^https:\/\/duckduckgo.com\/\?q=gg(\+|%20)([^&]+).+ https://www.google.com/search?q=$2 302
+
+    # bi xxx (bing)
+    - ^https:\/\/duckduckgo.com\/\?q=bi\+([^&]+).+ https://cn.bing.com/search?q=$1 302
 
     # gi xxx (Google image)
-    - ^https:\/\/bing.com\/\?q=gi(\+|%20)([^&]+).+ https://www.google.com/search?&tbm=isch&q=$2 302
+    - ^https:\/\/duckduckgo.com\/\?q=gi(\+|%20)([^&]+).+ https://www.google.com/search?&tbm=isch&q=$2 302
 
     # yt xxx (YouTube)
-    - ^https:\/\/bing.com\/\?q=yt(\+|%20)([^&]+).+ https://www.youtube.com/results?search_query=$2 302
+    - ^https:\/\/duckduckgo.com\/\?q=yt(\+|%20)([^&]+).+ https://www.youtube.com/results?search_query=$2 302
 
     # ph xxx (PornHub)
-    - ^https:\/\/bing.com\/\?q=ph\+([^&]+).+ https://cn.pornhub.com/video/search?search=$1 302
+    - ^https:\/\/duckduckgo.com\/\?q=ph\+([^&]+).+ https://cn.pornhub.com/video/search?search=$1 302
 
     # xv xxx (xvideo)
-    - ^https:\/\/bing.com\/\?q=xv\+([^&]+).+ https://www.xvideos.com/?k=$1 302
+    - ^https:\/\/duckduckgo.com\/\?q=xv\+([^&]+).+ https://www.xvideos.com/?k=$1 302
