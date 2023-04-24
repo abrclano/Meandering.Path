@@ -28,5 +28,8 @@ http:
     # ph xxx (PornHub)
     - ^https:\/\/duckduckgo.com\/\?q=ph\+([^&]+).+ https://cn.pornhub.com/video/search?search=$1 302
 
-    # xv xxx (xvideo)
-    - ^https:\/\/duckduckgo.com\/\?q=xv\+([^&]+).+ https://www.xvideos.com/?k=$1 302
+    # x xxx (xvideo)
+    - ^https:\/\/duckduckgo.com\/\?q=x\+([^&]+).+ https://www.xvideos.com/?k=$1 302
+    
+    # h xxx (hanime)
+    - ^https:\/\/duckduckgo.com\/\?q=xv\+([^&]+).+ https://www.hanimes.org/?s=$1 302
