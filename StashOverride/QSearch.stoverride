@@ -12,12 +12,12 @@ http:
 
     # gh xxx (GitHub)
     - ^https:\/\/duckduckgo.com\/\?q=gh(\+|%20)([^&]+).+ https://github.com/search?q=$2 302
+    
+    # b xxx (bing)
+    - ^https:\/\/duckduckgo.com\/\?q=b\+([^&]+).+ https://cn.bing.com/search?q=$1 302
 
     # gg xxx (Google)
     - ^https:\/\/duckduckgo.com\/\?q=gg(\+|%20)([^&]+).+ https://www.google.com/search?q=$2 302
-
-    # b xxx (bing)
-    - ^https:\/\/duckduckgo.com\/\?q=bi\+([^&]+).+ https://cn.bing.com/search?q=$1 302
 
     # gi xxx (Google image)
     - ^https:\/\/duckduckgo.com\/\?q=gi(\+|%20)([^&]+).+ https://www.google.com/search?&tbm=isch&q=$2 302
