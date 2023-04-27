@@ -1,5 +1,5 @@
 name: QSearch
-desc: 聚合搜索引擎
+desc: Aggregate search engines
 http:
   mitm:
     - "duckduckgo.com"
