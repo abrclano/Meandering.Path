@@ -1,9 +1,6 @@
 name: Enhance stash
 desc: Block QUIC,force http engine to work when tunnel mode on.
 
-rules:
-  - SCRIPT,quic,REJECT,no-track
-
 script:
   shortcuts: # 可以在 rule 中引用
     quic: network == 'udp' and dst_port == 443 # 匹配 QUIC 协议
@@ -15,3 +12,6 @@ http:
     - '*:80'
     - '*:4480' # BiliBili CDN
     - '*:9102' # BiliBili CDN
+
+rules:
+  - SCRIPT,quic,REJECT,no-track
