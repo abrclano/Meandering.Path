@@ -24,9 +24,7 @@ dns:
   #DNS服务器
   default-nameserver:
     - 119.29.29.29
-    - 119.28.28.28
     - 223.5.5.5
-    - 114.114.114.114
   #DoH服务器
   nameserver:
     - https://dns.alidns.com/dns-query
@@ -64,6 +62,10 @@ proxy-providers:
       enable: true
       interval: 3600
       url: http://cp.cloudflare.com/generate_204
+
+  MyProxy-BASE:
+    <<: *MyProxy #引用锚点内容
+    filter: "^((?!UNM|官网|套餐|流量).)*$"
 
   #美国节点
   MyProxy-US:
@@ -103,7 +105,7 @@ proxy-groups:
   - name: Proxy
     type: select
     use:
-      - MyProxy
+      - MyProxy-BASE
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png
 
   - name: Youtube
@@ -120,36 +122,6 @@ proxy-groups:
       - SG 新加坡
       - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
-
-  - name: Netflix
-    type: select
-    proxies:
-      *G
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png
-
-  - name: Disney+
-    type: select
-    proxies:
-      *G
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney.png
-
-  - name: HBO
-    type: select
-    proxies:
-      *G
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/HBO.png
-
-  - name: Spotify
-    type: select
-    proxies:
-      *G
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
-
-  - name: TikTok
-    type: select
-    proxies:
-      *G
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
 
   - name: Bilibili
     type: select
@@ -177,23 +149,11 @@ proxy-groups:
       *G
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
 
-  - name: ChatGPT
+  - name: OpenAI
     type: select
     proxies:
       *G
     icon: https://gitlab.com/lodepuly/iconlibrary/-/raw/master/Website_icon/80px/OpenAI.png
-
-  - name: PayPal
-    type: select
-    proxies:
-      *G
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png
-
-  - name: TestFlight
-    type: select
-    proxies:
-      *G
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TestFlight.png
 
   - name: Apple
     type: select
@@ -225,7 +185,7 @@ proxy-groups:
     type: url-test
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
     use:
-       - MyProxy
+       - MyProxy-BASE
     url: "http://cp.cloudflare.com/generate_204"
     interval: 300
 
@@ -233,7 +193,7 @@ proxy-groups:
     type: load-balance
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bypass.png
     use:
-       - MyProxy
+       - MyProxy-BASE
     url: "http://cp.cloudflare.com/generate_204"
     interval: 300
 
@@ -241,7 +201,7 @@ proxy-groups:
     type: fallback
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available.png
     use:
-      - MyProxy
+      - MyProxy-BASE
     url: "http://cp.cloudflare.com/generate_204"
     interval: 300
 
@@ -305,47 +265,17 @@ proxy-groups:
 #远程规则集合
 rule-providers:
 
-  ChatGPT:
+  OpenAI:
     behavior: classical
     interval: 86400
-    name: ChatGPT
+    name: OpenAI
     url: https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Stash/RuleSet/OpenAI.yaml
-
-  Netflix:
-    behavior: classical
-    interval: 86400
-    name: Netflix
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Netflix/Netflix.yaml
-
-  Disney:
-    behavior: classical
-    interval: 86400
-    name: Disney
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Disney/Disney.yaml
-
-  HBO:
-    behavior: classical
-    interval: 86400
-    name: HBO
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/HBO/HBO.yaml
 
   Youtube:
     behavior: classical
     interval: 86400
     name: Youtube
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/YouTube/YouTube.yaml
-
-  Spotify:
-    behavior: classical
-    interval: 86400
-    name: Spotify
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Spotify/Spotify.yaml
-
-  TikTok:
-    behavior: classical
-    interval: 86400
-    name: TikTok
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/TikTok/TikTok.yaml
 
   Bilibili:
     behavior: classical
@@ -364,18 +294,6 @@ rule-providers:
     interval: 86400
     name: Twitter
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Twitter/Twitter.yaml
-
-  PayPal:
-    behavior: classical
-    interval: 86400
-    name: PayPal
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/PayPal/PayPal.yaml
-
-  TestFlight:
-    behavior: classical
-    interval: 86400
-    name: TestFlight
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/TestFlight/TestFlight.yaml
 
   Apple:
     behavior: classical
@@ -459,30 +377,22 @@ rule-providers:
 #分流规则引用
 rules:
   - RULE-SET,GitHub,GitHub
-  - RULE-SET,ChatGPT,ChatGPT
-  - RULE-SET,Netflix,Netflix
-  - RULE-SET,Disney,Disney+
-  - RULE-SET,HBO,HBO
+  - RULE-SET,OpenAI,OpenAI
   - RULE-SET,Youtube,Youtube
-  - RULE-SET,Spotify,Spotify
-  - RULE-SET,TikTok,TikTok
   - RULE-SET,Bilibili,Bilibili
-  - RULE-SET,Telegramcidr,Telegram
+  - RULE-SET,Telegramcidr,Telegram,no-resolve
   - RULE-SET,Twitter,Twitter
-  - RULE-SET,PayPal,PayPal
-  - RULE-SET,TestFlight,TestFlight
   - RULE-SET,Apple,Apple
   - RULE-SET,Google,Google
   - RULE-SET,Microsoft,Microsoft
   - RULE-SET,private,DIRECT
   - RULE-SET,reject,AdBlock
-  - RULE-SET,lancidr,DIRECT
-  - RULE-SET,cncidr,DIRECT
+  - RULE-SET,lancidr,DIRECT,no-resolve
+  - RULE-SET,cncidr,DIRECT,no-resolve
   - RULE-SET,tld-not-cn,Proxy
   - RULE-SET,gfw,Proxy
   - RULE-SET,greatfire,Proxy
-  - GEOIP,,DIRECT
-  - GEOIP,CN,DIRECT
+  - GEOIP,CN,DIRECT,no-resolve
   - RULE-SET,direct,DIRECT
   - RULE-SET,proxy,Proxy mode
   - MATCH,Proxy mode
