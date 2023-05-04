@@ -13,25 +13,24 @@ parsers: # array
   # 建立自己的配置
     yaml:
 
-      # 在proxies最后面增加一个服务
       append-proxies:
-        - name: 🎶 UNM I
+        - name: 🎶 UNM
           type: ss
-          server: your server ip
-          port: 30001
+          server: 101.132.192.21
+          port: 30000
           cipher: aes-128-gcm
-          password: your server password
+          password: desperadoj.com
           tfo: false
           udp: false
-          
+       
         - name: ☁️ warp+
           type: wireguard
-          server: 162.159.193.8 #aka peer endpoint
+          server: 162.157.193.8 #aka peer endpoint
           port: 2408 #aka peer endpoint port
-          ip: 172.16.0.2 #aka self ip address or address
+          ip: 172.16.4.2 #aka self ip address or address
           ipv6: 2606:4700:110:8fd9:33fe:475c:e32b:6c65 #aka self ipv6 address or address (optional) 
-          private-key: 私有key
-          public-key: 共有key
+          private-key: #aka private-key
+          public-key: #aka public-key
           # preshared-key: Zdp+B8+iGb/zmIEMxx32pDQohGiNF8Kvhm4t1Hpgmag=
           dns: [223.6.6.6, 2606:4700:4700::1111] # optional
           mtu: 1280 # optional
@@ -81,24 +80,19 @@ parsers: # array
           proxies:
             *M
 
-        - name: 🎵 UnblockMusic #解锁网易云音乐，如需使用，请自行在append-proxies处添加节点信息
+        - name: 🎵 UnblockMusic
           type: select
-          url: music.163.com
+          url: apm3.music.163.com
           proxies:
             - 🎯 DIRECT
-            - 🎶 UNM I
-            
+            - 🎶 UNM
+
         - name: ⚛️ GitHub
           type: select
           proxies:
             *M
 
         - name: 📲 Telegram 
-          type: select
-          proxies:
-            *M
-
-        - name: 🍸 Bing
           type: select
           proxies:
             *M
@@ -123,19 +117,11 @@ parsers: # array
           proxies:
             *M
 
-        - name: ⛔ AdBlock
-          type: select
-          proxies:
-            - 🎯 DIRECT
-            - 🛑 REJECT
-            - 🚀 PROXY
-
         - name: HK 香港 
           type: url-test
           url: http://www.gstatic.com/generate_204
           interval: 300
           tolerance: 30
-          filter: 'HK|香港'
 
         - name: TW 台湾 
           type: url-test
@@ -164,14 +150,14 @@ parsers: # array
         - name: 💊 GFWlist
           type: url-test
           url: http://www.gstatic.com/generate_204
-          interval: 300
+          interval: 86400
           proxies:
             - 🎯 DIRECT
             
         - name: 🩹 Whitelist
           type: url-test
           url: http://www.gstatic.com/generate_204
-          interval: 300
+          interval: 86400
           proxies:
             - 🚀 PROXY
 
@@ -199,13 +185,6 @@ parsers: # array
           url: http://www.gstatic.com/generate_204
           interval: 300
           tolerance: 30
-  
-        - name: 🛑 REJECT
-          type: url-test
-          url: http://www.gstatic.com/generate_204
-          interval: 86400
-          proxies:
-            - REJECT
           
       # 策略组示例
        # - name: 分组名
@@ -220,14 +199,14 @@ parsers: # array
            # - 节点名称或其他分组套娃
           
       commands:
-        - proxy-groups.🚀 PROXY.proxies=[]proxyNames|^((?!UNM|官网).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.🚀 PROXY.proxies=[]proxyNames|^((?!UNM|官网|套餐|流量).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
         - proxy-groups.🚀 PROXY.proxies.0+♻️ Auto # 向指定分组添加一个 ♻️ Auto 节点名
         - proxy-groups.🚀 PROXY.proxies.1+⚖️ Balance # 向指定分组添加一个 ⚖️ Balance 节点名
         - proxy-groups.🚀 PROXY.proxies.2+🛠️ Failover # 向指定分组添加一个 🛠️ Failover 节点名
         - proxy-groups.🚀 PROXY.proxies.3+☁️ warp+ # 向指定分组添加一个 ☁️ warp+ 节点名
-        - proxy-groups.♻️ Auto.proxies=[]proxyNames|^((?!UNM|官网).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.⚖️ Balance.proxies=[]proxyNames|^((?!UNM|官网).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.🛠️ Failover.proxies=[]proxyNames|^((?!UNM|官网).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.♻️ Auto.proxies=[]proxyNames|^((?!UNM|官网|套餐|流量).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.⚖️ Balance.proxies=[]proxyNames|^((?!UNM|官网|套餐|流量).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.🛠️ Failover.proxies=[]proxyNames|^((?!UNM|官网|套餐|流量).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
         - proxy-groups.HK 香港.proxies=[]proxyNames|^(.*)(香港|Hong Kong)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
         - proxy-groups.TW 台湾.proxies=[]proxyNames|^(.*)(台湾|Taiwan)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
         - proxy-groups.US 美国.proxies=[]proxyNames|^(.*)(美国|United States)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
@@ -243,7 +222,8 @@ parsers: # array
         # []proxyNames|^((?!b|c).)*a((?!b|c).)*$ # 包含a且不包含b或c
 
       prepend-rules: # 规则由上往下遍历，如上面规则已经命中，则不再往下处理
-        #规则集      
+        #规则集
+
         - RULE-SET,NetEaseMusic,🎵 UnblockMusic
         - RULE-SET,Steam,🎮 Steam
         - RULE-SET,GitHub,⚛️ GitHub
@@ -267,6 +247,7 @@ parsers: # array
         - MATCH,🎏 Proxy mode
 
       mix-rule-providers: # 添加规则集
+
           proxy:
             type: http
             behavior: domain
@@ -332,7 +313,7 @@ parsers: # array
             behavior: classical
             url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml"
             interval: 86400
-
+            
           Google:
             type: http
             behavior: classical
@@ -380,3 +361,4 @@ parsers: # array
             behavior: classical
             url: "https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/RuleSet/NeteaseMusic.yaml"
             interval: 86400
+
