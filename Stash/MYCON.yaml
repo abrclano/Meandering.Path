@@ -1,7 +1,7 @@
 # 下载配置后,请手动添加机场订阅
 # 找到 {远程订阅} 部分，将MyProxy 部分的 url替换为自己的机场订阅链接
 
-subscribe-url: https://newhua99.com/api/v1/client/subscribe?token=e34d77e434b40defd366aa3672e954f3
+subscribe-url:
 # 填写上面文字用于Stash获取机场流量信息并在主页显示
 
 #混合端口
@@ -49,12 +49,12 @@ dns:
 proxies:
   - name: warp+
     type: wireguard
-    server: 162.159.193.5 #aka peer endpoint
+    server: 162.157.193.5 #aka peer endpoint
     port: 2408 #aka peer endpoint port
-    ip: 172.16.0.2 #aka self ip address or address
+    ip: 172.16.5.2 #aka self ip address or address
     ipv6: 2606:4700:110:8fd9:33fe:475c:e32b:6c65 #aka self ipv6 address or address (optional)
-    private-key: sF+LJ/viCueKqsDCwOPkCMSF6j8Z6sQDD063qqNP50M=
-    public-key: bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+    private-key: #aka private-key
+    public-key: #aka public-key
     # preshared-key: Zdp+B8+iGb/zmIEMxx32pDQohGiNF8Kvhm4t1Hpgmag=
     dns: [223.6.6.6, 2606:4700:4700::1111] # optional
     mtu: 1280 # optional
@@ -71,7 +71,7 @@ proxies:
 proxy-providers:
 
   MyProxy: &MyProxy #建立锚点
-    url: "https://newhua99.com/api/v1/client/subscribe?token=e34d77e434b40defd366aa3672e954f3"
+    url: ""
     # 使用Clash类型订阅链接替换掉引号""内的链接使用。
     # 或可使用通用订阅链接通过Sub-Store进行订阅转换。
     interval: 7200
