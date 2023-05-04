@@ -1,21 +1,19 @@
 # 下载配置后,请手动添加机场订阅
 # 找到 {远程订阅} 部分，将MyProxy 部分的 url替换为自己的机场订阅链接
 
-subscribe-url:
+subscribe-url: https://newhua99.com/api/v1/client/subscribe?token=e34d77e434b40defd366aa3672e954f3
 # 填写上面文字用于Stash获取机场流量信息并在主页显示
 
 #混合端口
 mixed-port: 7890
 #允许局域网
-allow-lan: true
+allow-lan: false
 #绑定地址
 bind-address: '*'
 #模式:rule（规则） / global（全局代理）/ direct（全局直连）
 mode: Rule
 #日志级别（日志输出级别：分级如后silent / info / warning / error / debug级别越高日志输出量越大）
 log-level: silent
-#外部控制器
-external-controller: 127.0.0.1:9090
 
 #DNS设置
 dns:
@@ -49,23 +47,42 @@ dns:
 
 #本地代理
 proxies:
+  - name: warp+
+    type: wireguard
+    server: 162.159.193.5 #aka peer endpoint
+    port: 2408 #aka peer endpoint port
+    ip: 172.16.0.2 #aka self ip address or address
+    ipv6: 2606:4700:110:8fd9:33fe:475c:e32b:6c65 #aka self ipv6 address or address (optional)
+    private-key: sF+LJ/viCueKqsDCwOPkCMSF6j8Z6sQDD063qqNP50M=
+    public-key: bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+    # preshared-key: Zdp+B8+iGb/zmIEMxx32pDQohGiNF8Kvhm4t1Hpgmag=
+    dns: [223.6.6.6, 2606:4700:4700::1111] # optional
+    mtu: 1280 # optional
+    udp: true
+    reserved: [233,116,70] # optional
+    keepalive: 45 # optional
+    # underlying-proxy: # optional
+    # type: trojan
+    # server: your-underlying-proxy
+    # port: 443
+    # password: your-password
 
 #远程订阅
 proxy-providers:
 
   MyProxy: &MyProxy #建立锚点
-    url: ""
+    url: "https://newhua99.com/api/v1/client/subscribe?token=e34d77e434b40defd366aa3672e954f3"
     # 使用Clash类型订阅链接替换掉引号""内的链接使用。
     # 或可使用通用订阅链接通过Sub-Store进行订阅转换。
-    interval: 86400
+    interval: 7200
     health-check:
       enable: true
-      interval: 3600
+      interval: 7200
       url: http://cp.cloudflare.com/generate_204
 
   MyProxy-BASE:
     <<: *MyProxy #引用锚点内容
-    filter: "^((?!UNM|官网|套餐|流量).)*$"
+    filter: "^((?!官网|套餐|流量).)*$"
 
   #美国节点
   MyProxy-US:
@@ -85,7 +102,7 @@ proxy-providers:
   #台湾节点
   MyProxy-TW:
     <<: *MyProxy #引用锚点内容
-    filter: "台|🇨🇳|湾|TW|(?i)Taiwan"
+    filter: "台|湾|TW|(?i)Taiwan"
 
   #新加坡节点
   MyProxy-SG:
@@ -111,16 +128,17 @@ proxy-groups:
   - name: Youtube
     type: select
     proxies: &G
+      - DIRECT
       - Proxy
       - Auto
       - Fallback
       - Balance
-      - US 美国
+      - warp+
       - HK 香港
-      - JP 日本
       - TW 台湾
+      - JP 日本
+      - US 美国
       - SG 新加坡
-      - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
 
   - name: Bilibili
@@ -173,21 +191,13 @@ proxy-groups:
       *G
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
 
-  - name: AdBlock
-    type: select
-    proxies:
-      - DIRECT
-      - REJECT
-      - Proxy
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png
-
   - name: Auto
     type: url-test
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
     use:
        - MyProxy-BASE
     url: "http://cp.cloudflare.com/generate_204"
-    interval: 300
+    interval: 600
 
   - name: Balance
     type: load-balance
@@ -195,7 +205,7 @@ proxy-groups:
     use:
        - MyProxy-BASE
     url: "http://cp.cloudflare.com/generate_204"
-    interval: 300
+    interval: 600
 
   - name: Fallback
     type: fallback
@@ -203,14 +213,14 @@ proxy-groups:
     use:
       - MyProxy-BASE
     url: "http://cp.cloudflare.com/generate_204"
-    interval: 300
+    interval: 600
 
 
   - name: GFWlist
     type: url-test
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png
     url: "http://cp.cloudflare.com/generate_204"
-    interval: 300
+    interval: 86400
     proxies:
       - DIRECT
 
@@ -218,7 +228,7 @@ proxy-groups:
     type: url-test
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png
     url: "http://cp.cloudflare.com/generate_204"
-    interval: 300
+    interval: 86400
     proxies:
       - Proxy
 
@@ -228,7 +238,7 @@ proxy-groups:
     use:
       - MyProxy-US
     url: "http://cp.cloudflare.com/generate_204"
-    interval: 300
+    interval: 600
 
   - name: HK 香港
     type: url-test
@@ -236,7 +246,7 @@ proxy-groups:
     use:
       - MyProxy-HK
     url: "http://cp.cloudflare.com/generate_204"
-    interval: 300
+    interval: 600
 
   - name: JP 日本
     type: url-test
@@ -244,15 +254,15 @@ proxy-groups:
     use:
       - MyProxy-JP
     url: "http://cp.cloudflare.com/generate_204"
-    interval: 300
+    interval: 600
 
   - name: TW 台湾
     type: url-test
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
     use:
       - MyProxy-TW
     url: "http://cp.cloudflare.com/generate_204"
-    interval: 300
+    interval: 600
 
   - name: SG 新加坡
     type: url-test
@@ -260,7 +270,7 @@ proxy-groups:
     use:
       - MyProxy-SG
     url: "http://cp.cloudflare.com/generate_204"
-    interval: 300
+    interval: 600
 
 #远程规则集合
 rule-providers:
@@ -318,12 +328,6 @@ rule-providers:
     interval: 86400
     name: GitHub
     url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml
-
-  reject:
-    behavior: domain
-    interval: 86400
-    name: reject
-    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt
 
   proxy:
     behavior: domain
@@ -386,7 +390,6 @@ rules:
   - RULE-SET,Google,Google
   - RULE-SET,Microsoft,Microsoft
   - RULE-SET,private,DIRECT
-  - RULE-SET,reject,AdBlock
   - RULE-SET,lancidr,DIRECT,no-resolve
   - RULE-SET,cncidr,DIRECT,no-resolve
   - RULE-SET,tld-not-cn,Proxy
