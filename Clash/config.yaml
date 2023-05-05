@@ -32,7 +32,7 @@ parsers: # array
           private-key: #aka private-key
           public-key: #aka public-key
           # preshared-key: Zdp+B8+iGb/zmIEMxx32pDQohGiNF8Kvhm4t1Hpgmag=
-          dns: [223.6.6.6, 2606:4700:4700::1111] # optional
+          dns: [8.8.4.4, 2606:4700:4700::1111] # optional
           mtu: 1280 # optional
           udp: true
           reserved: [233,116,70] # optional
@@ -199,7 +199,7 @@ parsers: # array
            # - 节点名称或其他分组套娃
           
       commands:
-        - proxy-groups.🚀 PROXY.proxies=[]proxyNames|^((?!UNM|官网|套餐|流量).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.🚀 PROXY.proxies=[]proxyNames|^((?!UNM|官网|套餐|流量|warp).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
         - proxy-groups.🚀 PROXY.proxies.0+♻️ Auto # 向指定分组添加一个 ♻️ Auto 节点名
         - proxy-groups.🚀 PROXY.proxies.1+⚖️ Balance # 向指定分组添加一个 ⚖️ Balance 节点名
         - proxy-groups.🚀 PROXY.proxies.2+🛠️ Failover # 向指定分组添加一个 🛠️ Failover 节点名
