@@ -1,47 +1,113 @@
 parsers: # array
   # - reg: ^.*$ 匹配所有订阅，或  - url: https://example.com/profile.yaml 指定订阅
   - reg: ^.*$
-  # 删除服务商提供的策略组和规则
+
     code: |
       module.exports.parse = (raw, { yaml }) => {
-        const rawObj = yaml.parse(raw)
-        const groups = []
-        const rules = []
-        return yaml.stringify({ ...rawObj, 'proxy-groups': groups, rules })
+
+        const rawObj = yaml.parse(raw);
+
+        const hongKongRegex = /^(.*)(香港|🇭🇰|HK|Hong)+(.*)$/i;
+        const hongKongProxies = rawObj['proxy-groups'].reduce((acc, cur) => {
+          if (cur.proxies) {
+            acc.push(...cur.proxies.filter(proxy => typeof proxy === 'string' && hongKongRegex.test(proxy) && !acc.includes(proxy)));
+          }
+          return acc;
+        }, []);
+
+        const taiwanRegex = /^(.*)(台湾|🇹🇼|TW|Taiwan)+(.*)$/i;
+        const taiwanProxies = rawObj['proxy-groups'].reduce((acc, cur) => {
+          if (cur.proxies) {
+            acc.push(...cur.proxies.filter(proxy => typeof proxy === 'string' && taiwanRegex.test(proxy) && !acc.includes(proxy)));
+          }
+          return acc;
+        }, []);
+
+        const japanRegex = /^(.*)(日本|🇯🇵|JP|Japan)+(.*)$/i;
+        const japanProxies = rawObj['proxy-groups'].reduce((acc, cur) => {
+          if (cur.proxies) {
+            acc.push(...cur.proxies.filter(proxy => typeof proxy === 'string' && japanRegex.test(proxy) && !acc.includes(proxy)));
+          }
+          return acc;
+        }, []);
+
+        const americaRegex = /^(.*)(美国|🇺🇸|US|United States|American)+(.*)$/i;
+        const americaProxies = rawObj['proxy-groups'].reduce((acc, cur) => {
+          if (cur.proxies) {
+            acc.push(...cur.proxies.filter(proxy => typeof proxy === 'string' && americaRegex.test(proxy) && !acc.includes(proxy)));
+          }
+          return acc;
+        }, []);
+
+        const singaporeRegex = /^(.*)(新加坡|狮城|🇸🇬|SG|Singapore)+(.*)$/i;
+        const singaporeProxies = rawObj['proxy-groups'].reduce((acc, cur) => {
+          if (cur.proxies) {
+            acc.push(...cur.proxies.filter(proxy => typeof proxy === 'string' && singaporeRegex.test(proxy) && !acc.includes(proxy)));
+          }
+          return acc;
+        }, []);
+
+        const groups = [
+          {
+            name: 'HK 香港',
+            type: 'url-test',      
+            url: 'http://www.gstatic.com/generate_204',
+            interval: 300,
+            tolerance: 30,
+            proxies: hongKongProxies.length > 0 ? [...hongKongProxies] : ['DIRECT']
+
+          },
+          {
+            name: 'TW 台湾',
+            type: 'url-test',      
+            url: 'http://www.gstatic.com/generate_204',
+            interval: 300,
+            tolerance: 30,
+            proxies: taiwanProxies.length > 0 ? [...taiwanProxies] : ['DIRECT']
+          },
+          {
+            name: 'US 美国',
+            type: 'url-test',      
+            url: 'http://www.gstatic.com/generate_204',
+            interval: 300,
+            tolerance: 30,
+            proxies: americaProxies.length > 0 ? [...americaProxies] : ['DIRECT']
+          },
+          {
+            name: 'JP 日本',
+            type: 'url-test',      
+            url: 'http://www.gstatic.com/generate_204',
+            interval: 300,
+            tolerance: 30,
+            proxies: japanProxies.length > 0 ? [...japanProxies] : ['DIRECT']
+          },
+          {
+            name: 'SG 狮城',
+            type: 'url-test',      
+            url: 'http://www.gstatic.com/generate_204',
+            interval: 300,
+            tolerance: 30,
+            proxies: singaporeProxies.length > 0 ? [...singaporeProxies] : ['DIRECT']
+          },
+        ];
+
+        const rules = [];
+
+        return yaml.stringify({ ...rawObj, 'proxy-groups': groups, rules });
       } 
 
   # 建立自己的配置
     yaml:
-
-      append-proxies:
-        - name: 🎶 UNM
-          type: ss
-          server: 101.132.192.21
-          port: 30000
-          cipher: aes-128-gcm
-          password: desperadoj.com
-          tfo: false
-          udp: false
-       
-        - name: ☁️ warp+
-          type: wireguard
-          server: 162.157.193.8 #aka peer endpoint
-          port: 2408 #aka peer endpoint port
-          ip: 172.16.4.2 #aka self ip address or address
-          ipv6: 2606:4700:110:8fd9:33fe:475c:e32b:6c65 #aka self ipv6 address or address (optional) 
-          private-key: #aka private-key
-          public-key: #aka public-key
-          # preshared-key: Zdp+B8+iGb/zmIEMxx32pDQohGiNF8Kvhm4t1Hpgmag=
-          dns: [8.8.4.4, 2606:4700:4700::1111] # optional
-          mtu: 1280 # optional
-          udp: true
-          reserved: [233,116,70] # optional
-          keepalive: 45 # optional
-          # underlying-proxy: # optional
-          # type: trojan
-          # server: your-underlying-proxy
-          # port: 443
-          # password: your-password
+      mix-proxy-providers:
+        UNM:
+          type: http
+          url: "https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/Proxy/NeteaseMusic.yaml"
+          interval: 172800
+          health-check:
+            enable: true
+            interval: 7200
+            lazy: true
+            url: http://www.gstatic.com/generate_204
 
       prepend-proxy-groups: # 建立策略组
         - name: 🎏 Proxy mode
@@ -50,7 +116,7 @@ parsers: # array
             - 💊 GFWlist # 黑名单模式，意为「只有命中规则的网络流量，才使用代理」
             - 🩹 Whitelist # 白名单模式，意为「没有命中规则的网络流量，统统使用代理」
         
-        - name: 🚀 PROXY
+        - name: 🚀 PROXY 
           type: select
 
         - name: 🎮 Steam 
@@ -61,7 +127,6 @@ parsers: # array
             - ♻️ Auto
             - ⚖️ Balance
             - 🛠️ Failover
-            - ☁️ warp+
             - HK 香港
             - TW 台湾 
             - US 美国 
@@ -85,8 +150,9 @@ parsers: # array
           url: apm3.music.163.com
           proxies:
             - 🎯 DIRECT
-            - 🎶 UNM
-
+          use:
+            - UNM
+            
         - name: ⚛️ GitHub
           type: select
           proxies:
@@ -116,36 +182,6 @@ parsers: # array
           type: select
           proxies:
             *M
-
-        - name: HK 香港 
-          type: url-test
-          url: http://www.gstatic.com/generate_204
-          interval: 300
-          tolerance: 30
-
-        - name: TW 台湾 
-          type: url-test
-          url: http://www.gstatic.com/generate_204
-          interval: 300
-          tolerance: 30
-
-        - name: US 美国 
-          type: url-test
-          url: http://www.gstatic.com/generate_204
-          interval: 300
-          tolerance: 30
-
-        - name: JP 日本 
-          type: url-test
-          url: http://www.gstatic.com/generate_204
-          interval: 300
-          tolerance: 30
-
-        - name: SG 狮城 
-          type: url-test
-          url: http://www.gstatic.com/generate_204
-          interval: 300
-          tolerance: 30
 
         - name: 💊 GFWlist
           type: url-test
@@ -186,34 +222,15 @@ parsers: # array
           interval: 300
           tolerance: 30
           
-      # 策略组示例
-       # - name: 分组名
-         # type: select       # 手动选点   
-               # url-test     # 自动选择延迟最低的节点
-               # fallback     # 节点故障时自动切换下一个
-               # laod-balance # 均衡使用分组内的节点
-         # url: http://www.gstatic.com/generate_204 # 测试地址 非select类型分组必要
-         # interval: 300 # 自动测试间隔时间，单位秒 非select类型分组必要
-         # tolerance: 50 # 允许的偏差，节点之间延迟差小于该值不切换 非必要
-         # proxies:  
-           # - 节点名称或其他分组套娃
-          
       commands:
-        - proxy-groups.🚀 PROXY.proxies=[]proxyNames|^((?!UNM|官网|套餐|流量|warp).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.🚀 PROXY.proxies.0+♻️ Auto # 向指定分组添加一个 ♻️ Auto 节点名
-        - proxy-groups.🚀 PROXY.proxies.1+⚖️ Balance # 向指定分组添加一个 ⚖️ Balance 节点名
-        - proxy-groups.🚀 PROXY.proxies.2+🛠️ Failover # 向指定分组添加一个 🛠️ Failover 节点名
-        - proxy-groups.🚀 PROXY.proxies.3+☁️ warp+ # 向指定分组添加一个 ☁️ warp+ 节点名
-        - proxy-groups.♻️ Auto.proxies=[]proxyNames|^((?!UNM|官网|套餐|流量).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.⚖️ Balance.proxies=[]proxyNames|^((?!UNM|官网|套餐|流量).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.🛠️ Failover.proxies=[]proxyNames|^((?!UNM|官网|套餐|流量).)*$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.HK 香港.proxies=[]proxyNames|^(.*)(香港|Hong Kong)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.TW 台湾.proxies=[]proxyNames|^(.*)(台湾|Taiwan)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.US 美国.proxies=[]proxyNames|^(.*)(美国|United States)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.JP 日本.proxies=[]proxyNames|^(.*)(日本|Japan)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.KR 韩国.proxies=[]proxyNames|^(.*)(韩国|Korea)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        - proxy-groups.SG 狮城.proxies=[]proxyNames|^(.*)(新加坡|Singapore)+(.*)$ # 向指定策略组添加订阅中的节点名，可使用正则过滤
-        
+        - proxy-groups.🚀 PROXY.proxies=[]proxyNames|^((?!官网|套餐|流量|机场|订阅).)*$ 
+        - proxy-groups.🚀 PROXY.proxies.0+♻️ Auto 
+        - proxy-groups.🚀 PROXY.proxies.1+⚖️ Balance 
+        - proxy-groups.🚀 PROXY.proxies.2+🛠️ Failover 
+        - proxy-groups.♻️ Auto.proxies=[]proxyNames|^((?!官网|套餐|流量|机场|订阅).)*$ 
+        - proxy-groups.⚖️ Balance.proxies=[]proxyNames|^((?!官网|套餐|流量|机场|订阅).)*$ 
+        - proxy-groups.🛠️ Failover.proxies=[]proxyNames|^((?!官网|套餐|流量|机场|订阅).)*$ 
+
         # 一些可能用到的正则过滤节点示例，使分组更细致
         # []proxyNames|a                         # 包含a
         # []proxyNames|^(.*)(a|b)+(.*)$          # 包含a或b
@@ -222,8 +239,6 @@ parsers: # array
         # []proxyNames|^((?!b|c).)*a((?!b|c).)*$ # 包含a且不包含b或c
 
       prepend-rules: # 规则由上往下遍历，如上面规则已经命中，则不再往下处理
-        #规则集
-
         - RULE-SET,NetEaseMusic,🎵 UnblockMusic
         - RULE-SET,Steam,🎮 Steam
         - RULE-SET,GitHub,⚛️ GitHub
@@ -247,7 +262,6 @@ parsers: # array
         - MATCH,🎏 Proxy mode
 
       mix-rule-providers: # 添加规则集
-
           proxy:
             type: http
             behavior: domain
@@ -310,50 +324,50 @@ parsers: # array
 
           Microsoft:
             type: http
-            behavior: classical
-            url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml"
+            behavior: domain
+            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/microsoft.yaml"
             interval: 86400
             
           Google:
             type: http
-            behavior: classical
-            url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml"
+            behavior: domain
+            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/google.yaml"
             interval: 86400
 
           Apple:
             type: http
-            behavior: classical
-            url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple.yaml"
+            behavior: domain
+            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/apple.yaml"
             interval: 86400
 
           OpenAI:
             type: http
-            behavior: classical
-            url: "https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Stash/RuleSet/OpenAI.yaml"
+            behavior: domain
+            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/openai.yaml"
             interval: 86400
 
           Youtube:
             type: http
-            behavior: classical
-            url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTube/YouTube.yaml"
+            behavior: domain
+            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/youtube.yaml"
             interval: 86400 
 
           BiliBili:
             type: http
-            behavior: classical
-            url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BiliBili/BiliBili.yaml"
+            behavior: domain
+            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/bilibili.yaml"
             interval: 86400
 
           GitHub:
             type: http
-            behavior: classical
-            url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml"
+            behavior: domain
+            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/github.yaml"
             interval: 86400
 
           Steam:
             type: http
-            behavior: classical
-            url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Steam/Steam.yaml"
+            behavior: domain
+            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/steam.yaml"
             interval: 86400
 
           NetEaseMusic:
