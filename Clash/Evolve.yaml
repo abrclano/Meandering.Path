@@ -164,7 +164,7 @@ rule-providers: # 远程规则集
  Global: {<<: *d, path: ./ruleset/Global.yaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Global/Global_Domain.yaml}
 
 rules: # 分流规则引用
-  - SCRIPT,quic,REJECT
+#  - SCRIPT,quic,REJECT
   - DOMAIN,rules.kr328.app,Proxy
   - RULE-SET,Private,DIRECT
   - RULE-SET,HTTPDNS,REJECT
