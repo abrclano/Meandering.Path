@@ -17,8 +17,8 @@ external-controller: 127.0.0.1:53345  # 外部控制器监听地址，可以使�
 
 geodata-mode: true                    #【Meta专属】使用geoip.dat数据库(默认：false使用mmdb数据库)
 geox-url:                             # 自定义 geodata url, 需要有代理的前提才能下载geoip和geosite
-  geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip-lite.dat"
-  geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  geoip: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
   mmdb: "https://cdn.jsdelivr.net/gh/Hackl0us/GeoIP2-CN@release/Country.mmdb"
 
 find-process-mode: strict             # 匹配所有进程（always/strict/off）
