@@ -2,34 +2,33 @@
 
 function main(params) {
 
-
   // 香港地区
-  const hongKongRegex = /香港|HK|Hong/;
+  const hongKongRegex = /香港|HK|Hong|🇭🇰/;
   const hongKongProxies = params.proxies
     .filter((e) => hongKongRegex.test(e.name))
     .map((e) => e.name);
   // 台湾地区
-  const taiwanRegex = /台湾|TW|Taiwan/;
+  const taiwanRegex = /台湾|TW|Taiwan|Wan|🇨🇳|🇹🇼/;
   const taiwanProxies = params.proxies
     .filter((e) => taiwanRegex.test(e.name))
     .map((e) => e.name);
   // 狮城地区
-  const singaporeRegex = /新加坡|狮城|SG|Singapore/;
+  const singaporeRegex = /新加坡|狮城|SG|Singapore|🇸🇬/;
   const singaporeProxies = params.proxies
     .filter((e) => singaporeRegex.test(e.name))
     .map((e) => e.name);
   // 日本地区
-  const japanRegex = /日本|JP|Japan/;
+  const japanRegex = /日本|JP|Japan|🇯🇵/;
   const japanProxies = params.proxies
     .filter((e) => japanRegex.test(e.name))
     .map((e) => e.name);
   // 美国地区
-  const americaRegex = /美国|US|United States|America/;
+  const americaRegex = /美国|US|United States|America|🇺🇸/;
   const americaProxies = params.proxies
     .filter((e) => americaRegex.test(e.name))
     .map((e) => e.name);
   // 其他地区
-  const othersRegex = /香港|HK|Hong Kong|台湾|TW|TaiWan|新加坡|SG|Singapore|狮城|日本|JP|Japan|美国|US|States|America|Music|自动|故障|流量|官网|套餐|机场|订阅/;
+  const othersRegex = /香港|HK|Hong|🇭🇰|台湾|TW|Taiwan|Wan|🇨🇳|🇹🇼|新加坡|SG|Singapore|狮城|🇸🇬|日本|JP|Japan|🇯🇵|美国|US|States|America|🇺🇸|自动|故障|流量|官网|套餐|机场|订阅/;
   const othersProxies = params.proxies
     .filter((e) => !othersRegex.test(e.name))
     .map((e) => e.name);
@@ -166,25 +165,24 @@ function main(params) {
   // 规则
   const rules = [
     "AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT",// quic
-    "GEOSITE,CateGory-Ads-All,REJECT",
-    "GEOSITE,Private,DIRECT,no-resolve",
-    "GEOSITE,CateGory-Games@cn,DIRECT,no-resolve",
-    "GEOSITE,Microsoft@cn,DIRECT,no-resolve",
-    "GEOSITE,Apple@cn,DIRECT,no-resolve",
-    "GEOIP,Cloudflare,Global,no-resolve",
-    "GEOSITE,Bing,ArtIntel,no-resolve",
-    "GEOSITE,OpenAI,ArtIntel,no-resolve",
-    "GEOSITE,CateGory-Games,Games,no-resolve",
-    "GEOSITE,GitHub,Global,no-resolve",
-    "GEOSITE,Telegram,Telegram,no-resolve",
-    "GEOSITE,Youtube,YouTube,no-resolve",
-    "GEOSITE,Disney,Streaming,no-resolve",
-    "GEOSITE,Netflix,Streaming,no-resolve",
-    "GEOSITE,HBO,Streaming,no-resolve",
-    "GEOSITE,PrimeVideo,Streaming,no-resolve",
-    "GEOSITE,BiliBili,BiliBili,no-resolve",
-    "GEOSITE,Google,Google,no-resolve",
-    "GEOSITE,Geolocation-!cn,Global,no-resolve",
+    // "GEOSITE,Category-ads-all,REJECT", // 可能导致某些网站无法访问
+    "GEOSITE,Private,DIRECT",
+    "GEOSITE,Category-games@cn,Mainland",
+    "GEOSITE,Microsoft@cn,Mainland",
+    "GEOSITE,Apple@cn,Mainland",
+    "GEOSITE,Bing,ArtIntel",
+    "GEOSITE,Openai,ArtIntel",
+    "GEOSITE,Category-games,Games",
+    "GEOSITE,Github,Global",
+    "GEOSITE,Telegram,Telegram",
+    "GEOSITE,Youtube,YouTube",
+    "GEOSITE,Disney,Streaming",
+    "GEOSITE,Netflix,Streaming",
+    "GEOSITE,HBO,Streaming",
+    "GEOSITE,Primevideo,Streaming",
+    "GEOSITE,Bilibili,BiliBili",
+    "GEOSITE,Google,Google",
+    "GEOSITE,Geolocation-!cn,Global",
     "GEOIP,CN,Mainland,no-resolve",
     "MATCH,Final"
   ];
