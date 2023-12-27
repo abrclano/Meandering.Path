@@ -164,7 +164,7 @@ function main(params) {
   const groups = params["proxy-groups"] = [];
   // 规则
   const rules = [
-    "AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT",// quic
+    "AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN,no-resolve))),REJECT",// quic
     // "GEOSITE,Category-ads-all,REJECT",// 可能导致某些网站无法访问
     "GEOSITE,Private,DIRECT",
     "GEOSITE,Bing,ArtIntel",
