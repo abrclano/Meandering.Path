@@ -28,12 +28,12 @@ function main(params) {
     .filter((e) => americaRegex.test(e.name))
     .map((e) => e.name);
   // 其他地区
-  const othersRegex = /香港|HK|Hong|🇭🇰|台湾|TW|Taiwan|Wan|🇨🇳|🇹🇼|新加坡|SG|Singapore|狮城|🇸🇬|日本|JP|Japan|🇯🇵|美国|US|States|America|🇺🇸|自动|故障|流量|官网|套餐|机场|订阅/;
+  const othersRegex = /香港|HK|Hong|🇭🇰|台湾|TW|Taiwan|Wan|🇨🇳|🇹🇼|新加坡|SG|Singapore|狮城|🇸🇬|日本|JP|Japan|🇯🇵|美国|US|States|America|🇺🇸|自动|故障|流量|官网|套餐|机场|订阅|年|月/;
   const othersProxies = params.proxies
     .filter((e) => !othersRegex.test(e.name))
     .map((e) => e.name);
   // 所有地区
-  const allRegex = /自动|故障|流量|官网|套餐|机场|订阅/;
+  const allRegex = /自动|故障|流量|官网|套餐|机场|订阅|年|月/;
   const allProxies = params.proxies
     .filter((e) => !allRegex.test(e.name))
     .map((e) => e.name);
@@ -165,24 +165,25 @@ function main(params) {
   // 规则
   const rules = [
     "AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT",// quic
-    // "GEOSITE,Category-ads-all,REJECT", // 可能导致某些网站无法访问
+    // "GEOSITE,Category-ads-all,REJECT",// 可能导致某些网站无法访问
     "GEOSITE,Private,DIRECT",
-    "GEOSITE,Category-games@cn,Mainland",
-    "GEOSITE,Microsoft@cn,Mainland",
-    "GEOSITE,Apple@cn,Mainland",
     "GEOSITE,Bing,ArtIntel",
     "GEOSITE,Openai,ArtIntel",
+    "GEOSITE,Category-games@cn,Mainland",
     "GEOSITE,Category-games,Games",
     "GEOSITE,Github,Global",
     "GEOSITE,Telegram,Telegram",
+    "GEOSITE,Bilibili,BiliBili",
     "GEOSITE,Youtube,YouTube",
     "GEOSITE,Disney,Streaming",
     "GEOSITE,Netflix,Streaming",
     "GEOSITE,HBO,Streaming",
     "GEOSITE,Primevideo,Streaming",
-    "GEOSITE,Bilibili,BiliBili",
     "GEOSITE,Google,Google",
+    "GEOSITE,Microsoft@cn,Mainland",
+    "GEOSITE,Apple@cn,Mainland",
     "GEOSITE,Geolocation-!cn,Global",
+    "GEOSITE,CN,Mainland",
     "GEOIP,CN,Mainland,no-resolve",
     "MATCH,Final"
   ];
