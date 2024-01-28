@@ -43,6 +43,7 @@ function main(params) {
     name: "HongKong",
     type: "url-test",
     url: "http://www.gstatic.com/generate_204",
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png",
     interval: 300,
     tolerance: 20,
     lazy: true,
@@ -53,6 +54,7 @@ function main(params) {
     name: "TaiWan",
     type: "url-test",
     url: "http://www.gstatic.com/generate_204",
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Taiwan.png",
     interval: 300,
     tolerance: 20,
     lazy: true,
@@ -63,6 +65,7 @@ function main(params) {
     name: "Singapore",
     type: "url-test",
     url: "http://www.gstatic.com/generate_204",
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png",
     interval: 300,
     tolerance: 20,
     lazy: true,
@@ -73,6 +76,7 @@ function main(params) {
     name: "Japan",
     type: "url-test",
     url: "http://www.gstatic.com/generate_204",
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png",
     interval: 300,
     tolerance: 20,
     lazy: true,
@@ -83,6 +87,7 @@ function main(params) {
     name: "America",
     type: "url-test",
     url: "http://www.gstatic.com/generate_204",
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png",
     interval: 300,
     tolerance: 20,
     lazy: true,
@@ -93,6 +98,7 @@ function main(params) {
     name: "Others",
     type: "url-test",
     url: "http://www.gstatic.com/generate_204",
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Area.png",
     interval: 300,
     tolerance: 20,
     lazy: true,
@@ -103,6 +109,7 @@ function main(params) {
     name: "Auto",
     type: "url-test",
     url: "http://www.gstatic.com/generate_204",
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Auto.png",
     interval: 300,
     tolerance: 20,
     lazy: true,
@@ -113,6 +120,7 @@ function main(params) {
     name: "Balance",
     type: "load-balance",
     url: "http://www.gstatic.com/generate_204",
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Available.png",
     interval: 300,
     strategy: "consistent-hashing",
     lazy: true,
@@ -123,6 +131,7 @@ function main(params) {
     name: "Fallback",
     type: "fallback",
     url: "http://www.gstatic.com/generate_204",
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Bypass.png",
     interval: 300,
     lazy: true,
     proxies: allProxies.length > 0 ? allProxies : ["DIRECT"]
@@ -138,27 +147,27 @@ function main(params) {
 
 
   // 漏网之鱼
-  const Final = { name: "Final", type: "select", proxies: ["DIRECT", "Global", "Proxy"] };
+  const Final = { name: "Final", type: "select", proxies: ["DIRECT", "Global", "Proxy"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png" };
   // 手动选择
-  const Proxy = { name: "Proxy", type: "select", proxies: allProxies.length > 0 ? allProxies : ["DIRECT"] };
+  const Proxy = { name: "Proxy", type: "select", proxies: allProxies.length > 0 ? allProxies : ["DIRECT"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png" };
   // 国外网站
-  const Global = { name: "Global", type: "select", proxies: G };
+  const Global = { name: "Global", type: "select", proxies: G, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Global.png" };
   // 国内网站
-  const Mainland = { name: "Mainland", type: "select", proxies: M };
+  const Mainland = { name: "Mainland", type: "select", proxies: M, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China_Map.png" };
   // 人工智能
-  const ArtIntel = { name: "ArtIntel", type: "select", proxies: AI };
+  const ArtIntel = { name: "ArtIntel", type: "select", proxies: AI, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Bot.png" };
   // 油管视频
-  const YouTube = { name: "YouTube", type: "select", proxies: G };
+  const YouTube = { name: "YouTube", type: "select", proxies: G, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png" };
   // 哔哩哔哩
-  const BiliBili = { name: "BiliBili", type: "select", proxies: ["DIRECT", "HongKong", "TaiWan"] };
+  const BiliBili = { name: "BiliBili", type: "select", proxies: ["DIRECT", "HongKong", "TaiWan"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/bilibili.png" };
   // 国际媒体
-  const Streaming = { name: "Streaming", type: "select", proxies: G };
+  const Streaming = { name: "Streaming", type: "select", proxies: G, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/ForeignMedia.png" };
   // 电报信息
-  const Telegram = { name: "Telegram", type: "select", proxies: G };
+  const Telegram = { name: "Telegram", type: "select", proxies: G, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png" };
   // 谷歌服务
-  const Google = { name: "Google", type: "select", proxies: G };
+  const Google = { name: "Google", type: "select", proxies: G, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google.png" };
   // 游戏平台
-  const Games = { name: "Games", type: "select", proxies: G };
+  const Games = { name: "Games", type: "select", proxies: G, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Game.png" };
 
 
   const groups = params["proxy-groups"] = [];
@@ -172,7 +181,7 @@ function main(params) {
     "GEOSITE,Category-games@cn,Mainland",
     "GEOSITE,Category-games,Games",
     "GEOSITE,Github,Global",
-    "GEOSITE,Telegram,Telegram",
+    "GEOIP,Telegram,Telegram,no-resolve",
     "GEOSITE,Bilibili,BiliBili",
     "GEOSITE,Youtube,YouTube",
     "GEOSITE,Disney,Streaming",
