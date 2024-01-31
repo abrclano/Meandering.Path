@@ -46,6 +46,7 @@ function main(params) {
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png",
     interval: 300,
     tolerance: 20,
+    timeout: 2000,
     lazy: true,
     proxies: hongKongProxies.length > 0 ? hongKongProxies : ["DIRECT"]
   };
@@ -57,6 +58,7 @@ function main(params) {
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Taiwan.png",
     interval: 300,
     tolerance: 20,
+    timeout: 2000,
     lazy: true,
     proxies: taiwanProxies.length > 0 ? taiwanProxies : ["DIRECT"]
   };
@@ -68,6 +70,7 @@ function main(params) {
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png",
     interval: 300,
     tolerance: 20,
+    timeout: 2000,
     lazy: true,
     proxies: singaporeProxies.length > 0 ? singaporeProxies : ["DIRECT"]
   };
@@ -79,6 +82,7 @@ function main(params) {
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png",
     interval: 300,
     tolerance: 20,
+    timeout: 2000,
     lazy: true,
     proxies: japanProxies.length > 0 ? japanProxies : ["DIRECT"]
   };
@@ -90,6 +94,7 @@ function main(params) {
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png",
     interval: 300,
     tolerance: 20,
+    timeout: 2000,
     lazy: true,
     proxies: americaProxies.length > 0 ? americaProxies : ["DIRECT"]
   };
@@ -98,9 +103,10 @@ function main(params) {
     name: "Others",
     type: "url-test",
     url: "http://www.gstatic.com/generate_204",
-    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Area.png",
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/World_Map.png",
     interval: 300,
     tolerance: 20,
+    timeout: 2000,
     lazy: true,
     proxies: othersProxies.length > 0 ? othersProxies : ["DIRECT"]
   };
@@ -112,6 +118,7 @@ function main(params) {
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Auto.png",
     interval: 300,
     tolerance: 20,
+    timeout: 2000,
     lazy: true,
     proxies: allProxies.length > 0 ? allProxies : ["DIRECT"]
   };
@@ -133,10 +140,10 @@ function main(params) {
     url: "http://www.gstatic.com/generate_204",
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Bypass.png",
     interval: 300,
+    timeout: 2000,
     lazy: true,
     proxies: allProxies.length > 0 ? allProxies : ["DIRECT"]
   };
-
 
   // 国外分组
   const G = ["Proxy", "Auto", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"];
@@ -144,7 +151,6 @@ function main(params) {
   const M = ["DIRECT", "Proxy", "Auto", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"];
   // AI分组
   const AI = ["Proxy", "America", "Japan", "Singapore", "TaiWan", "HongKong", "Others"];
-
 
   // 漏网之鱼
   const Final = { name: "Final", type: "select", proxies: ["DIRECT", "Global", "Proxy"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png" };
@@ -168,9 +174,11 @@ function main(params) {
   const Google = { name: "Google", type: "select", proxies: G, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google.png" };
   // 游戏平台
   const Games = { name: "Games", type: "select", proxies: G, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Game.png" };
-
-
+  // 插入分组
   const groups = params["proxy-groups"] = [];
+  groups.unshift(HongKong, TaiWan, Japan, Singapore, America, Others, Auto, Balance, Fallback);
+  groups.unshift(Final, Proxy, Global, Mainland, ArtIntel, YouTube, BiliBili, Streaming, Telegram, Google, Games);
+
   // 规则
   const rules = [
     "AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN,no-resolve))),REJECT",// quic
@@ -196,12 +204,30 @@ function main(params) {
     "GEOIP,CN,Mainland,no-resolve",
     "MATCH,Final"
   ];
-
-  // 插入分组
-  groups.unshift(HongKong, TaiWan, Japan, Singapore, America, Others, Auto, Balance, Fallback);
-  groups.unshift(Final, Proxy, Global, Mainland, ArtIntel, YouTube, BiliBili, Streaming, Telegram, Google, Games);
   // 插入规则
   params.rules = rules;
+
+  /***
+   *** 使用远程规则资源示例
+   *** 使用时须在rules中添加对应规则
+   *** E.G
+       "RULE-SET,telegram_domain,Telegram",
+       "RULE-SET,telegram_ip,Telegram,no-resolve"
+   */
+  /***
+  // 远程规则类型
+  const ruleAnchor = {
+    ip: { type: 'http', interval: 86400, behavior: 'ipcidr', format: 'text' },
+    domain: { type: 'http', interval: 86400, behavior: 'domain', format: 'text' }
+  };
+  // 远程规则资源
+  const ruleProviders = {
+    telegram_domain: { ...ruleAnchor.domain, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.list' },
+    telegram_ip: { ...ruleAnchor.ip, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.list' }
+  };
+  // 插入远程规则
+  params["rule-providers"] = ruleProviders;
+   */
 
   return params;
 }
