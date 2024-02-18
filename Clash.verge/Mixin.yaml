@@ -1,30 +1,25 @@
 # Merge Template for clash verge
 # The `Merge` format used to enhance profile
 
-mode: rule                            # 规则模式：rule（规则） / global（全局代理）/ direct（全局直连）/ script (脚本)
-ipv6: false                           # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
-log-level: info                       # 设置日志输出级别 (5 个级别：silent / error / warning / info / debug）
-allow-lan: true                       # 允许局域网的连接（共享代理）
-mixed-port: 7890                      # 混合端口，HTTP和SOCKS5用一个端口
-bind-address: "*"                     # 监听IP白名单，可绑定单个IPv4和v6地址，"*" 为绑定所有IP地址，仅在将allow-lan设置为true时适用
+bind-address: '*'                     # 监听IP白名单，可绑定单个IPv4和v6地址，"*" 为绑定所有IP地址，仅在将allow-lan设置为true时适用
 unified-delay: false                  # 统一延迟，更换延迟计算方式，去除握手等额外延迟
+tcp-concurrent: true                  #【Meta专属】TCP 并发连接所有 IP, 将使用最快握手的 TCP
+keep-alive-interval: 15               #  TCP keep alive interval
 skip-auth-prefixes:                   # 设置跳过验证的IP段
   - 127.0.0.1/8
   - ::1/128
-tcp-concurrent: true                  #【Meta专属】TCP 并发连接所有 IP, 将使用最快握手的 TCP
-keep-alive-interval: 15               #  TCP keep alive interval
-external-controller: 127.0.0.1:53345  # 外部控制器监听地址，可以使用 RESTful API 来控制你的 clash 内核
 
 geodata-mode: true                    #【Meta专属】使用geoip.dat数据库(默认：false使用mmdb数据库)
 geox-url:                             # 自定义 geodata url, 需要有代理的前提才能下载geoip和geosite
-  geoip: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geoip: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip-lite.dat"
   geosite: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
   mmdb: "https://cdn.jsdelivr.net/gh/Hackl0us/GeoIP2-CN@release/Country.mmdb"
+geo-auto-update: true                 # 是否自动更新 geodata
+geo-update-interval: 24               # 更新间隔，单位：小时
 
 find-process-mode: strict             # 匹配所有进程（always/strict/off）
 global-client-fingerprint: chrome     # 全局 TLS 指纹，优先低于 proxy 内的 client-fingerprint
                                       # 可选： "chrome","firefox","safari","ios","random","none" options.
-
 profile:
   store-selected: true                # 存储 select 选择记录
   store-fake-ip: true                 # 持久化 fake-ip
@@ -33,12 +28,15 @@ sniffer:                              # 嗅探域名 可选配置
   enable: true
   parse-pure-ip: true                 # 是否使用嗅探结果作为实际访问，默认 true
   sniff:
-    TLS:                              # TLS 默认嗅探 443
-      ports: [443, 8443]
     HTTP:
       ports: [80, 8080-8880]
       override-destination: true
+    TLS: 
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
   force-domain: []                    # 强制对此域名进行嗅探
+  skip-domain: ['Mijia Cloud']        # 跳过对此域名进行嗅探
 
 tun:                                  # Tun 配置
   enable: true
@@ -51,21 +49,21 @@ tun:                                  # Tun 配置
 
 dns:
   enable: true                        # 关闭将使用系统 DNS
-  prefer-h3: true                     # 是否开启 DOH 的 http/3
   ipv6: false                         # IPV6解析开关；如果为false，将返回ipv6结果为空
   enhanced-mode: fake-ip              # 模式：redir-host或fake-ip
-  listen: 0.0.0.0:53                  # DNS 监听地址
-  use-hosts: false                    # 是否查询系统 hosts
+  listen: :1053                       # DNS 监听地
   fake-ip-range: 198.18.0.1/16        # fakeip 下的 IP 段设置，tun 网卡的默认 ip 也使用此值
-  fake-ip-filter: ['+.lan', '+.local', '*.msftncsi.com', '*.msftconnecttest.com']
+  fake-ip-filter: ['*', '+.lan', '+.local', '+.msftncsi.com', '+.msftconnecttest.com']
                                       # Fake-ip 过滤，列表中的域名返回真实IP
-  default-nameserver: [223.5.5.5, 119.29.29.29]
-                                      # 解析非IP的dns用的dns服务器，只支持纯IP，（Meta可为其加密）
   proxy-server-nameserver: [https://dns.alidns.com/dns-query, https://doh.pub/dns-query]
                                       # 代理DNS服务器，支持udp/tcp/dot/doh/doq
   nameserver-policy:
-    "geosite:cn,private,apple@cn,microsoft@cn,category-games@cn": [https://doh.pub/dns-query, https://dns.alidns.com/dns-query]
-    "geosite:geolocation-!cn": ["https://dns.google/dns-query#dns", "https://dns.cloudflare.com/dns-query#dns"]
+    "geosite:cn,private": [https://doh.pub/dns-query, https://dns.alidns.com/dns-query]
+    "geosite:geolocation-!cn": [https://dns.google/dns-query, https://dns.cloudflare.com/dns-query]
                                       # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
   nameserver: [https://dns.alidns.com/dns-query, https://doh.pub/dns-query]
                                       # 默认DNS服务器，支持udp/tcp/dot/doh/doq
+  fallback: [tls://8.8.4.4, tls://1.1.1.1]
+                                      # fallbaack DNS服务器，支持udp/tcp/dot/doh/doq
+  fallback-filter: { geoip: true, geoip-code: CN, ipcidr: [240.0.0.0/4, 0.0.0.0/32] }
+  
