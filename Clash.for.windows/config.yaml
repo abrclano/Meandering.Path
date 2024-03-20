@@ -50,7 +50,7 @@ parsers: # array
         const groups = [
           {
             name: 'HK 香港',
-            type: 'url-test',      
+            type: 'url-test',
             url: 'http://www.gstatic.com/generate_204',
             interval: 300,
             tolerance: 30,
@@ -59,7 +59,7 @@ parsers: # array
           },
           {
             name: 'TW 台湾',
-            type: 'url-test',      
+            type: 'url-test',
             url: 'http://www.gstatic.com/generate_204',
             interval: 300,
             tolerance: 30,
@@ -67,7 +67,7 @@ parsers: # array
           },
           {
             name: 'US 美国',
-            type: 'url-test',      
+            type: 'url-test',
             url: 'http://www.gstatic.com/generate_204',
             interval: 300,
             tolerance: 30,
@@ -75,7 +75,7 @@ parsers: # array
           },
           {
             name: 'JP 日本',
-            type: 'url-test',      
+            type: 'url-test',
             url: 'http://www.gstatic.com/generate_204',
             interval: 300,
             tolerance: 30,
@@ -83,7 +83,7 @@ parsers: # array
           },
           {
             name: 'SG 狮城',
-            type: 'url-test',      
+            type: 'url-test',
             url: 'http://www.gstatic.com/generate_204',
             interval: 300,
             tolerance: 30,
@@ -94,32 +94,21 @@ parsers: # array
         const rules = [];
 
         return yaml.stringify({ ...rawObj, 'proxy-groups': groups, rules });
-      } 
+      }
 
   # 建立自己的配置
     yaml:
-      mix-proxy-providers:
-        UNM:
-          type: http
-          url: "https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/Proxy/NeteaseMusic.yaml"
-          interval: 172800
-          health-check:
-            enable: true
-            interval: 7200
-            lazy: true
-            url: http://www.gstatic.com/generate_204
-
       prepend-proxy-groups: # 建立策略组
         - name: 🎏 Proxy mode
           type: select
           proxies:
             - 💊 GFWlist # 黑名单模式，意为「只有命中规则的网络流量，才使用代理」
             - 🩹 Whitelist # 白名单模式，意为「没有命中规则的网络流量，统统使用代理」
-        
-        - name: 🚀 PROXY 
+
+        - name: 🚀 PROXY
           type: select
 
-        - name: 🎮 Steam 
+        - name: 🎮 Steam
           type: select
           proxies: &M
             - 🎯 DIRECT
@@ -128,52 +117,44 @@ parsers: # array
             - ⚖️ Balance
             - 🛠️ Failover
             - HK 香港
-            - TW 台湾 
-            - US 美国 
-            - JP 日本 
+            - TW 台湾
+            - US 美国
+            - JP 日本
             - SG 狮城
-         
-        - name: 🍻 BiliBili 
+
+        - name: 🍻 BiliBili
           type: select
           proxies:
             - 🎯 DIRECT
             - HK 香港
-            - TW 台湾 
+            - TW 台湾
 
         - name: 🍷 Youtube
           type: select
           proxies:
             *M
 
-        - name: 🎵 UnblockMusic
-          type: select
-          url: apm3.music.163.com
-          proxies:
-            - 🎯 DIRECT
-          use:
-            - UNM
-            
         - name: ⚛️ GitHub
           type: select
           proxies:
             *M
 
-        - name: 📲 Telegram 
+        - name: 📲 Telegram
           type: select
           proxies:
             *M
 
-        - name: 🤖 OpenAI 
+        - name: 🤖 OpenAI
           type: select
           proxies:
             *M
 
-        - name: ✨ Google 
+        - name: ✨ Google
           type: select
-          proxies: 
+          proxies:
             *M
 
-        - name: Ⓜ️ Microsoft 
+        - name: Ⓜ️ Microsoft
           type: select
           proxies:
             *M
@@ -189,7 +170,7 @@ parsers: # array
           interval: 86400
           proxies:
             - 🎯 DIRECT
-            
+
         - name: 🩹 Whitelist
           type: url-test
           url: http://www.gstatic.com/generate_204
@@ -204,7 +185,7 @@ parsers: # array
           proxies:
             - DIRECT
 
-        - name: ♻️ Auto 
+        - name: ♻️ Auto
           type: url-test
           url: http://www.gstatic.com/generate_204
           interval: 300
@@ -216,20 +197,20 @@ parsers: # array
           interval: 300
           tolerance: 30
 
-        - name: 🛠️ Failover 
+        - name: 🛠️ Failover
           type: fallback
           url: http://www.gstatic.com/generate_204
           interval: 300
           tolerance: 30
-          
+
       commands:
-        - proxy-groups.🚀 PROXY.proxies=[]proxyNames|^((?!官网|套餐|流量|机场|订阅).)*$ 
-        - proxy-groups.🚀 PROXY.proxies.0+♻️ Auto 
-        - proxy-groups.🚀 PROXY.proxies.1+⚖️ Balance 
-        - proxy-groups.🚀 PROXY.proxies.2+🛠️ Failover 
-        - proxy-groups.♻️ Auto.proxies=[]proxyNames|^((?!官网|套餐|流量|机场|订阅).)*$ 
-        - proxy-groups.⚖️ Balance.proxies=[]proxyNames|^((?!官网|套餐|流量|机场|订阅).)*$ 
-        - proxy-groups.🛠️ Failover.proxies=[]proxyNames|^((?!官网|套餐|流量|机场|订阅).)*$ 
+        - proxy-groups.🚀 PROXY.proxies=[]proxyNames|^((?!官网|套餐|流量|机场|订阅).)*$
+        - proxy-groups.🚀 PROXY.proxies.0+♻️ Auto
+        - proxy-groups.🚀 PROXY.proxies.1+⚖️ Balance
+        - proxy-groups.🚀 PROXY.proxies.2+🛠️ Failover
+        - proxy-groups.♻️ Auto.proxies=[]proxyNames|^((?!官网|套餐|流量|机场|订阅).)*$
+        - proxy-groups.⚖️ Balance.proxies=[]proxyNames|^((?!官网|套餐|流量|机场|订阅).)*$
+        - proxy-groups.🛠️ Failover.proxies=[]proxyNames|^((?!官网|套餐|流量|机场|订阅).)*$
 
         # 一些可能用到的正则过滤节点示例，使分组更细致
         # []proxyNames|a                         # 包含a
@@ -239,12 +220,11 @@ parsers: # array
         # []proxyNames|^((?!b|c).)*a((?!b|c).)*$ # 包含a且不包含b或c
 
       prepend-rules: # 规则由上往下遍历，如上面规则已经命中，则不再往下处理
-        - RULE-SET,NetEaseMusic,🎵 UnblockMusic
         - RULE-SET,Steam,🎮 Steam
         - RULE-SET,GitHub,⚛️ GitHub
         - RULE-SET,Apple,🍎 Apple
         - RULE-SET,Youtube,🍷 Youtube
-        - RULE-SET,OpenAI,🤖 OpenAI 
+        - RULE-SET,OpenAI,🤖 OpenAI
         - RULE-SET,BiliBili,🍻 BiliBili
         - RULE-SET,telegramcidr,📲 Telegram,no-resolve
         - RULE-SET,Microsoft,Ⓜ️ Microsoft
@@ -297,7 +277,7 @@ parsers: # array
             behavior: domain
             url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt"
             interval: 86400
-            
+
           cncidr:
             type: http
             behavior: ipcidr
@@ -325,54 +305,47 @@ parsers: # array
           Microsoft:
             type: http
             behavior: domain
-            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/microsoft.yaml"
+            url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.yaml"
             interval: 86400
-            
+
           Google:
             type: http
             behavior: domain
-            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/google.yaml"
+            url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.yaml"
             interval: 86400
 
           Apple:
             type: http
             behavior: domain
-            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/apple.yaml"
+            url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.yaml"
             interval: 86400
 
           OpenAI:
             type: http
             behavior: domain
-            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/openai.yaml"
+            url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.yaml"
             interval: 86400
 
           Youtube:
             type: http
             behavior: domain
-            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/youtube.yaml"
-            interval: 86400 
+            url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.yaml"
+            interval: 86400
 
           BiliBili:
             type: http
             behavior: domain
-            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/bilibili.yaml"
+            url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bilibili.yaml"
             interval: 86400
 
           GitHub:
             type: http
             behavior: domain
-            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/github.yaml"
+            url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.yaml"
             interval: 86400
 
           Steam:
             type: http
             behavior: domain
-            url: "https://raw.githubusercontent.com/Kr328/V2rayDomains2Clash/generated/steam.yaml"
+            url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.yaml"
             interval: 86400
-
-          NetEaseMusic:
-            type: http
-            behavior: classical
-            url: "https://raw.githubusercontent.com/abrclano/Self-use-Rules/main/RuleSet/NeteaseMusic.yaml"
-            interval: 86400
-
