@@ -4,39 +4,25 @@ function main(params) {
 
   // 香港地区
   const hongKongRegex = /香港|HK|Hong|🇭🇰/;
-  const hongKongProxies = params.proxies
-    .filter((e) => hongKongRegex.test(e.name))
-    .map((e) => e.name);
+  const hongKongProxies = getProxiesByRegex(params, hongKongRegex);
   // 台湾地区
   const taiwanRegex = /台湾|TW|Taiwan|Wan|🇨🇳|🇹🇼/;
-  const taiwanProxies = params.proxies
-    .filter((e) => taiwanRegex.test(e.name))
-    .map((e) => e.name);
+  const taiwanProxies = getProxiesByRegex(params, taiwanRegex);
   // 狮城地区
   const singaporeRegex = /新加坡|狮城|SG|Singapore|🇸🇬/;
-  const singaporeProxies = params.proxies
-    .filter((e) => singaporeRegex.test(e.name))
-    .map((e) => e.name);
+  const singaporeProxies = getProxiesByRegex(params, singaporeRegex);
   // 日本地区
   const japanRegex = /日本|JP|Japan|🇯🇵/;
-  const japanProxies = params.proxies
-    .filter((e) => japanRegex.test(e.name))
-    .map((e) => e.name);
+  const japanProxies = getProxiesByRegex(params, japanRegex);
   // 美国地区
   const americaRegex = /美国|US|United States|America|🇺🇸/;
-  const americaProxies = params.proxies
-    .filter((e) => americaRegex.test(e.name))
-    .map((e) => e.name);
+  const americaProxies = getProxiesByRegex(params, americaRegex);
   // 其他地区
-  const othersRegex = /香港|HK|Hong|🇭🇰|台湾|TW|Taiwan|Wan|🇨🇳|🇹🇼|新加坡|SG|Singapore|狮城|🇸🇬|日本|JP|Japan|🇯🇵|美国|US|States|America|🇺🇸|自动|故障|流量|官网|套餐|机场|订阅|年|月/;
-  const othersProxies = params.proxies
-    .filter((e) => !othersRegex.test(e.name))
-    .map((e) => e.name);
+  const othersRegex = /^(?!.*(?:香港|HK|Hong|🇭🇰|台湾|TW|Taiwan|Wan|🇨🇳|🇹🇼|新加坡|SG|Singapore|狮城|🇸🇬|日本|JP|Japan|🇯🇵|美国|US|States|America|🇺🇸|自动|故障|流量|官网|套餐|机场|订阅|年|月)).*$/;
+  const othersProxies = getProxiesByRegex(params, othersRegex);
   // 所有地区
-  const allRegex = /自动|故障|流量|官网|套餐|机场|订阅|年|月/;
-  const allProxies = params.proxies
-    .filter((e) => !allRegex.test(e.name))
-    .map((e) => e.name);
+  const allRegex = /^(?!.*(?:自动|故障|流量|官网|套餐|机场|订阅|年|月|失联|频道)).*$/;
+  const allProxies = getProxiesByRegex(params, allRegex);
 
   // 香港
   const HongKong = {
@@ -230,4 +216,10 @@ function main(params) {
    */
 
   return params;
+}
+
+function getProxiesByRegex(params, regex) {
+  return params.proxies
+    .filter((e) => regex.test(e.name))
+    .map((e) => e.name);
 }
