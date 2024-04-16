@@ -52,7 +52,7 @@ dns:
   enhanced-mode: fake-ip              # 模式：redir-host或fake-ip
   listen: :1053                       # DNS 监听地
   fake-ip-range: 198.18.0.1/16        # fakeip 下的 IP 段设置，tun 网卡的默认 ip 也使用此值
-  fake-ip-filter: ['*', '+.lan', '+.local', '+.msftncsi.com', '+.msftconnecttest.com']
+  fake-ip-filter: ['*', '+.lan', '+.local', '+.msftncsi.com', '+.msftconnecttest.com', 'localhost.ptlogin2.qq.com']
                                       # Fake-ip 过滤，列表中的域名返回真实IP
   proxy-server-nameserver: [https://dns.alidns.com/dns-query, https://doh.pub/dns-query]
                                       # 代理DNS服务器，支持udp/tcp/dot/doh/doq
