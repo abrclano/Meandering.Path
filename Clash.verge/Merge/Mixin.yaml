@@ -37,14 +37,15 @@ sniffer:                              # 嗅探域名 可选配置
   force-domain: []                    # 强制对此域名进行嗅探
   skip-domain: ['Mijia Cloud']        # 跳过对此域名进行嗅探
 
-tun:                                  # Tun 配置
-  enable: true
-  stack: system                       # 可选： system/gvisor/mixed
-                                      # tun模式堆栈,如无使用问题,建议使用 system 栈;
-  dns-hijack: [any:53]                # dns劫持,一般设置为 any:53 即可, 即劫持所有53端口的udp流量
-  strict-route: true                  # 将所有连接路由到tun来防止泄漏，但你的设备将无法被其他设备访问
-  auto-route: true                    # 自动设置全局路由，可以自动将全局流量路由进入tun网卡。
-  auto-detect-interface: true         # 自动识别出口网卡
+# UI界面tun设置优先级更高，此处无效
+# tun:                                  # Tun 配置
+#   enable: true
+#   stack: system                       # 可选： system/gvisor/mixed
+#                                       # tun模式堆栈,如无使用问题,建议使用 system 栈;
+#   dns-hijack: [any:53]                # dns劫持,一般设置为 any:53 即可, 即劫持所有53端口的udp流量
+#   strict-route: true                  # 将所有连接路由到tun来防止泄漏，但你的设备将无法被其他设备访问
+#   auto-route: true                    # 自动设置全局路由，可以自动将全局流量路由进入tun网卡。
+#   auto-detect-interface: true         # 自动识别出口网卡
 
 dns:
   enable: true                        # 关闭将使用系统 DNS
