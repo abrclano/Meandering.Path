@@ -188,6 +188,7 @@ function main(params) {
     "GEOSITE,Geolocation-!cn,Global",
     "GEOSITE,CN,Mainland",
     "GEOIP,CN,Mainland,no-resolve",
+    "DOMAIN-KEYWORD,interactivebrokers,Global",
     "MATCH,Final"
   ];
   // 插入规则
