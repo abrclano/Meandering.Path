@@ -188,7 +188,8 @@ function main(params) {
     "GEOSITE,Geolocation-!cn,Global",
     "GEOSITE,CN,Mainland",
     "GEOIP,CN,Mainland,no-resolve",
-    "DOMAIN-KEYWORD,interactivebrokers,Global",
+    "DOMAIN-REGEX,\.(interactivebrokers|ibkr|ibllc)\.com\.cn,DIRECT",
+    "DOMAIN-REGEX,\.(interactivebrokers|ibkr|ibllc)\.com,Global",
     "MATCH,Final"
   ];
   // 插入规则
