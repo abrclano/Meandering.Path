@@ -21,7 +21,7 @@ function main(params) {
   const othersRegex = /^(?!.*(?:香港|HK|Hong|🇭🇰|台湾|TW|Taiwan|Wan|🇨🇳|🇹🇼|新加坡|SG|Singapore|狮城|🇸🇬|日本|JP|Japan|🇯🇵|美国|US|States|America|🇺🇸|自动|故障|流量|官网|套餐|机场|订阅|年|月|公益|时间|过期|无效|注册|回国|产品|免费|体验|广告位|请|群|官?网[站址]?|等级[12]|[vV](ip|IP)?[01])).*$/;
   const othersProxies = getProxiesByRegex(params, othersRegex);
   // 所有地区
-  const allRegex = /^(?!.*(?:自动|故障|流量|官网|套餐|机场|订阅|年|月|失联|频道|公益|时间|过期|无效|注册|回国|产品|免费|体验|广告位|请|群|官?网[站址]?|等级[12]|[vV](ip|IP)?[01])).*$/;
+  const allRegex = /^(?!.*(?:自动|故障|流量|官网|套餐|机场|订阅|年|月|失联|频道)).*$/;
   const allProxies = getProxiesByRegex(params, allRegex);
 
   // 香港
@@ -189,7 +189,7 @@ function main(params) {
     "GEOSITE,CN,Mainland",
     "GEOIP,CN,Mainland,no-resolve",
     "DOMAIN-REGEX,\.(interactivebrokers|ibkr|ibllc)\.com\.cn,DIRECT",
-    "DOMAIN-REGEX,\.(interactivebrokers|ibkr|ibllc)\.com,Global",
+    "DOMAIN-REGEX,\.(interactivebrokers|ibkr|ibllc)\.(com|info),Global",
     "MATCH,Final"
   ];
   // 插入规则
