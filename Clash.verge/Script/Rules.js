@@ -82,6 +82,10 @@ function main(params) {
     "GEOSITE,Geolocation-!cn,Global",
     "GEOSITE,CN,Mainland",
     "GEOIP,CN,Mainland,no-resolve",
+    "DOMAIN-REGEX,\.(interactivebrokers|ibkr|ibllc)\.com\.cn,DIRECT",
+    "DOMAIN-REGEX,\.(interactivebrokers|ibkr|ibllc)\.(com|info),Global",
+    "DOMAIN-SUFFIX,hk,Global",
+    "DOMAIN-SUFFIX,annas-archive.org,Global",
     "MATCH,Final"
   ];
 
