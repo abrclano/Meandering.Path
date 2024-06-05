@@ -1,7 +1,7 @@
 function main(params) {
 
   // 创建代理组的函数
-  function createProxyGroup(name, type, icon, proxies) {
+  function createProxyGroup(name, type, icon, proxies, hidden = false) {
     return {
       name,
       type,
@@ -12,7 +12,8 @@ function main(params) {
       timeout: type === "url-test" ? 2000 : undefined,
       lazy: true,
       proxies: proxies.length > 0 ? proxies : ["DIRECT"],
-      strategy: type === "load-balance" ? "consistent-hashing" : undefined
+      strategy: type === "load-balance" ? "consistent-hashing" : undefined,
+      hidden
     };
   }
 
@@ -26,7 +27,7 @@ function main(params) {
   // 定义区域及其正则表达式
   const regions = [
     { name: "HongKong", regex: /香港|HK|Hong|🇭🇰/, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png" },    
-    { name: "NoHongKong", regex: /^(?!.*(?:香港|HK|Hong|🇭🇰)).*$/, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png" },
+    { name: "NoHongKong", regex: /^(?!.*(?:香港|HK|Hong|🇭🇰)).*$/, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png", hidden: true },
     { name: "TaiWan", regex: /台湾|TW|Taiwan|Wan|🇨🇳|🇹🇼/, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Taiwan.png" },
     { name: "Singapore", regex: /新加坡|狮城|SG|Singapore|🇸🇬/, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png" },
     { name: "Japan", regex: /日本|JP|Japan|🇯🇵/, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png" },
@@ -39,7 +40,7 @@ function main(params) {
 
   // 创建代理组
   const proxyGroups = regions.map(region =>
-    createProxyGroup(region.name, region.type || "url-test", region.icon, getProxiesByRegex(params, region.regex))
+    createProxyGroup(region.name, region.type || "url-test", region.icon, getProxiesByRegex(params, region.regex), region.hidden)
   );
 
   // 预定义代理组
