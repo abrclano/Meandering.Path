@@ -84,10 +84,18 @@ function main(params) {
     "GEOSITE,Geolocation-!cn,Global",
     "GEOSITE,CN,Mainland",
     "GEOIP,CN,Mainland,no-resolve",
-    "DOMAIN-REGEX,\.(interactivebrokers|ibkr|ibllc)\.com\.cn,DIRECT",
-    "DOMAIN-REGEX,\.(interactivebrokers|ibkr|ibllc)\.(com|info),Global",
+    "DOMAIN-REGEX,.*(interactivebrokers|ibkr|ibllc)\.com\.cn,DIRECT",
+    "DOMAIN-REGEX,.*(interactivebrokers|ibkr|ibllc)\.(com|info),Global",
     "DOMAIN-SUFFIX,hk,Global",
     "DOMAIN-SUFFIX,annas-archive.org,Global",
+    "DOMAIN-SUFFIX,cloudlion.me,Global",
+    "DOMAIN-SUFFIX,mydyjs.com,Global",
+    "DOMAIN-SUFFIX,diskanalyzer.com,Global",
+    "DOMAIN-SUFFIX,nopecha.com,Global",
+    "DOMAIN-SUFFIX,singlelogin.rs,Global",
+    "DOMAIN-SUFFIX,singlelogin.re,Global",
+    "DOMAIN-SUFFIX,henet.uk,Global",
+    "DOMAIN-SUFFIX,quantquestions.io,Global",
     "MATCH,Final"
   ];
 
