@@ -1,3 +1,5 @@
+// Define main function (script entry)
+
 function main(params) {
 
   // 创建代理组的函数
@@ -81,21 +83,19 @@ function main(params) {
     "GEOSITE,Google,Google",
     "GEOSITE,Microsoft@cn,Mainland",
     "GEOSITE,Apple@cn,Mainland",
+    "DOMAIN-SUFFIX,sharepoint.com,DIRECT",
     "GEOSITE,Geolocation-!cn,Global",
     "GEOSITE,CN,Mainland",
     "GEOIP,CN,Mainland,no-resolve",
     "DOMAIN-REGEX,.*(interactivebrokers|ibkr|ibllc)\.com\.cn,DIRECT",
-    "DOMAIN-REGEX,.*(interactivebrokers|ibkr|ibllc)\.(com|info),Global",
-    "DOMAIN-SUFFIX,hk,Global",
-    "DOMAIN-SUFFIX,annas-archive.org,Global",
-    "DOMAIN-SUFFIX,cloudlion.me,Global",
-    "DOMAIN-SUFFIX,mydyjs.com,Global",
-    "DOMAIN-SUFFIX,diskanalyzer.com,Global",
-    "DOMAIN-SUFFIX,nopecha.com,Global",
+    "DOMAIN-REGEX,.*(interactivebrokers|ibkr|ibllc)\.(com|info)$,Global",
+    "DOMAIN-SUFFIX,annas-archive.gs,Global",
     "DOMAIN-SUFFIX,singlelogin.rs,Global",
     "DOMAIN-SUFFIX,singlelogin.re,Global",
-    "DOMAIN-SUFFIX,henet.uk,Global",
-    "DOMAIN-SUFFIX,quantquestions.io,Global",
+    "DOMAIN-SUFFIX,api.dns-dynamic.net,Global",
+    "DOMAIN-SUFFIX,nopecha.com,Global",
+    "DOMAIN-SUFFIX,hk,Global",
+    "DOMAIN-SUFFIX,uk,Global",
     "MATCH,Final"
   ];
 
