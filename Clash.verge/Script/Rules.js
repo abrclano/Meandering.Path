@@ -51,14 +51,14 @@ function main(params) {
     { name: "Final", type: "select", proxies: ["DIRECT", "Global", "Proxy"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png" },
     { name: "Proxy", type: "select", proxies: ["Auto", ...new Set(proxyGroups.flatMap(g => g.proxies))], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png" },
     { name: "Global", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Global.png" },
-    { name: "Mainland", type: "select", proxies: ["DIRECT", "Global", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Round_Robin.png" },
+    { name: "Mainland", type: "select", proxies: ["DIRECT", "Proxy", "Auto", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Round_Robin.png" },
     { name: "ArtIntel", type: "select", proxies: ["NoHongKong", "Proxy", "America", "Japan", "Singapore", "TaiWan", "HongKong", "Others"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Copilot.png" },
-    { name: "YouTube", type: "select", proxies: ["Global", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png" },
+    { name: "YouTube", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png" },
     { name: "BiliBili", type: "select", proxies: ["DIRECT", "HongKong", "TaiWan"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/bilibili.png" },
-    { name: "Streaming", type: "select", proxies: ["Global", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/ForeignMedia.png" },
-    { name: "Telegram", type: "select", proxies: ["Global", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png" },
-    { name: "Google", type: "select", proxies: ["Global", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google.png" },
-    { name: "Games", type: "select", proxies: ["Global", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Game.png" }
+    { name: "Streaming", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/ForeignMedia.png" },
+    { name: "Telegram", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png" },
+    { name: "Google", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google.png" },
+    { name: "Games", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", "HongKong", "TaiWan", "Singapore", "Japan", "America", "Others"], icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Game.png" }
   ];
 
   // 插入分组
@@ -91,7 +91,7 @@ function main(params) {
     "GEOIP,CN,Mainland,no-resolve",
     "DOMAIN-REGEX,.*(interactivebrokers|ibkr|ibllc)\.com\.cn,DIRECT",
     "DOMAIN-REGEX,.*(interactivebrokers|ibkr|ibllc)\.(com|info)$,Global",
-    "DOMAIN-SUFFIX,annas-archive.gs,Global",
+    "DOMAIN-SUFFIX,annas-archive.org,Global",
     "DOMAIN-SUFFIX,singlelogin.rs,Global",
     "DOMAIN-SUFFIX,singlelogin.re,Global",
     "DOMAIN-SUFFIX,api.dns-dynamic.net,Global",
