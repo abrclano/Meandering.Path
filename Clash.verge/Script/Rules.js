@@ -85,6 +85,7 @@ function main(params) {
     "GEOSITE,Microsoft@cn,Mainland",
     "GEOSITE,Apple@cn,Mainland",
     "DOMAIN-SUFFIX,sharepoint.com,DIRECT",
+    "DOMAIN-SUFFIX,oaifree.com,DIRECT",
     "GEOSITE,Binance,NoAmerica",
     "GEOSITE,Geolocation-!cn,Global",
     "GEOSITE,CN,Mainland",
