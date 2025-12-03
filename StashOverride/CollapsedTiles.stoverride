@@ -3,7 +3,7 @@ desc: Checks if ChatGPT, Gemini, Netflix, and YouTube are accessible or unblocke
 category: tile
 icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Unlock.png
 
-tiles
+tiles:
   - name: ChatGPT-Check
     title: ChatGPT
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png
