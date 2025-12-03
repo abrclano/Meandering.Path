@@ -1,0 +1,10 @@
+name: Google search redirect
+desc: Redirect Google searches from .cn to .com
+category: enhance
+icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png
+http:
+  mitm:
+    - "google.cn"
+  url-rewrite:
+    - ^https?://(www\.)?(google|g)\.cn(/.*[?&]q=.*)$ https://www.google.com$3 307
+    - ^https?://(www\.)?(google|g)\.cn/(search|webhp)(\?.*)?$ https://www.google.com/$3$4 307
