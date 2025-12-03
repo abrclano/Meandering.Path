@@ -6,7 +6,7 @@ icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Unlock.pn
 tiles
   - name: ChatGPT-Check
     title: ChatGPT
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/chatgpt.png
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png
     collapsed: true
     url: https://chatgpt.com
   - name: Gemini-Check
@@ -16,7 +16,7 @@ tiles
     url: https://gemini.google.com
   - name: YouTube-Check
     title: YouTube
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/youtube.png
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png
     collapsed: true
     url: https://www.youtube.com
   - name: Netflix-Check
