@@ -1,0 +1,36 @@
+name: Collapsed tiles
+desc: Checks if ChatGPT, Gemini, Netflix, and YouTube are accessible or unblocked on your network
+category: tile
+icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Unlock.png
+
+tiles
+  - name: ChatGPT-Check
+    title: ChatGPT
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/chatgpt.png
+    collapsed: true
+    url: https://chatgpt.com
+  - name: Gemini-Check
+    title: Gemini
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AI.png
+    collapsed: true
+    url: https://gemini.google.com
+  - name: YouTube-Check
+    title: YouTube
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/youtube.png
+    collapsed: true
+    url: https://www.youtube.com
+  - name: Netflix-Check
+    title: Netflix
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png
+    collapsed: true
+    url: https://www.netflix.com
+
+script-providers:
+  ChatGPT-Check:
+    url: https://fastly.jsdelivr.net/gh/abrclano/Meandering.Path@main/StashOverride/script/chatgpt.js
+  Gemini-Check:
+    url: https://fastly.jsdelivr.net/gh/abrclano/Meandering.Path@main/StashOverride/script/gemini.js
+  YouTube-Check:
+    url: https://fastly.jsdelivr.net/gh/abrclano/Meandering.Path@main/StashOverride/script/youtube.js
+  Netflix-Check:
+    url: https://fastly.jsdelivr.net/gh/abrclano/Meandering.Path@main/StashOverride/script/netflix.js
