@@ -1,5 +1,8 @@
 name: QSearch
 desc: Aggregate search engines
+category: enhance
+icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Magic.png
+
 http:
   mitm:
     - "duckduckgo.com"
@@ -12,7 +15,7 @@ http:
 
     # gh xxx (GitHub)
     - ^https:\/\/duckduckgo.com\/\?q=gh(\+|%20)([^&]+).+ https://github.com/search?q=$2 302
-    
+
     # ddg xxx (DuckDuckGo)
     - ^https:\/\/duckduckgo.com\/\?q=ddg(\+|%20)([^&]+).+ https://duckduckgo.com/?ia=about&q=$2 302
 
@@ -30,9 +33,9 @@ http:
 
     # x xxx (xvideo)
     - ^https:\/\/duckduckgo.com\/\?q=x\+([^&]+).+ https://www.xvideos.com/?k=$1 302
-    
+
     # h (hanime)
     - ^https:\/\/duckduckgo.com\/\?q=h&.+ https://www.hanimes.org 302
-    
+
     # xxx （cn.bing）
     - ^https:\/\/duckduckgo.com\/\?q=(?!dl(c|e|j)(\+|%20))([^&]+).+ https://cn.bing.com/search?q=$3&num=100 302

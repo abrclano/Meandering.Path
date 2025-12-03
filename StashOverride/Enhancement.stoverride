@@ -1,5 +1,7 @@
 name: Enhance stash
 desc: Block QUIC,force http engine to work when tunnel mode on.
+category: enhance
+icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Puzzle.png
 
 rules:
   - SCRIPT,quic,REJECT,no-track
