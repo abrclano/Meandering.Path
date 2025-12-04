@@ -1,62 +1,43 @@
-async function request(method, params) {
-  return new Promise((resolve, reject) => {
-    const httpMethod = $httpClient[method.toLowerCase()];
-    httpMethod(params, (error, response, data) => {
-      resolve({ error, response, data });
+async function request(method, url) {
+  return new Promise((resolve) => {
+    $httpClient[method.toLowerCase()](url, (error, response) => {
+      resolve({ error, response });
     });
   });
 }
 
-async function checkTitle(id) {
-  const { error, response, data } = await request(
-    "GET",
-    `https://www.netflix.com/title/${id}`
-  );
-
-  if (error) {
-    return "";
-  }
-
-  let url = response.headers["X-Originating-Url"];
-  if (!url) {
-    return "";
-  }
+function extractCountry(response) {
+  const url = response?.headers?.["X-Originating-Url"];
+  if (!url || typeof url !== "string") return null;
   const loc = url.split("/")[3];
-  if (loc === "title") {
-    return "us";
-  }
-  return loc.split("-")[0];
+  return loc === "title" ? "us" : (loc?.split("-")[0] ?? null);
 }
 
 async function main() {
-  var country = await checkTitle(70143836);
-  if (country) {
-    $done({
-      content: `No Restriction (${country.toUpperCase()})`,
-      backgroundColor: "#E50914",
-    });
-    return;
+  const { error: err1, response: res1 } = await request("GET", "https://www.netflix.com/title/70143836");
+  if (!err1) {
+    const country = extractCountry(res1);
+    if (country) {
+      return { content: `No Restriction (${country.toUpperCase()})`, backgroundColor: "#E50914" };
+    }
   }
 
-  var country = await checkTitle(80197526);
-  if (country) {
-    $done({
-      content: `Originals Only (${country.toUpperCase()})`,
-      backgroundColor: "#E50914",
-    });
-    return;
+  const { error: err2, response: res2 } = await request("GET", "https://www.netflix.com/title/80197526");
+  if (!err2) {
+    const country = extractCountry(res2);
+    if (country) {
+      return { content: `Originals Only (${country.toUpperCase()})`, backgroundColor: "#E50914" };
+    }
   }
 
-  $done({
-    content: "Not Available",
-    backgroundColor: "",
-  });
+  return { content: "Not Available", backgroundColor: "" };
 }
 
 (async () => {
-  main()
-    .then((_) => { })
-    .catch((error) => {
-      $done({});
-    });
+  try {
+    const result = await main();
+    $done(result);
+  } catch (error) {
+    $done({});
+  }
 })();

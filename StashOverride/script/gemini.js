@@ -1,51 +1,41 @@
-async function request(method, params) {
-  return new Promise((resolve, reject) => {
-    const httpMethod = $httpClient[method.toLowerCase()];
-    httpMethod(params, (error, response, data) => {
-      resolve({ error, response, data });
+async function request(method, url) {
+  return new Promise((resolve) => {
+    $httpClient[method.toLowerCase()](url, (error, response, data) => {
+      resolve({ error, data });
     });
   });
 }
 
+function extractGeminiCountryCode(html) {
+  if (typeof html !== 'string') return null;
+  const match = html.match(/,2,1,200,"([A-Z]{3})"/);
+  return match ? match[1] : null;
+}
+
 async function main() {
-  const { error, response, data } = await request(
-    "GET",
-    "https://gemini.google.com"
-  );
+  const { error, data } = await request("GET", "https://gemini.google.com");
 
   if (error) {
-    $done({
-      content: "Network Error",
-      backgroundColor: "",
-    });
-    return;
+    return { content: "Network Error" };
   }
 
   if (typeof data !== 'string') {
-    $done({
-      content: "Failed",
-      backgroundColor: "",
-    });
-    return;
+    return { content: "Failed" };
   }
 
   if (!data.includes('45631641,null,true')) {
-    $done({
-      content: "Blocked",
-      backgroundColor: "",
-    });
-    return;
+    return { content: "Blocked" };
   }
 
-  $done({
-    content: "Available",
-    backgroundColor: "#88A788",
-  });
+  const countryCode = extractGeminiCountryCode(data);
+  const content = countryCode ? `Available (${countryCode})` : "Available";
+  return { content, backgroundColor: "#88A788" };
 }
 
 (async () => {
   try {
-    await main();
+    const result = await main();
+    $done(result);
   } catch (error) {
     $done({});
   }

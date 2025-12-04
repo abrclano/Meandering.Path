@@ -1,52 +1,49 @@
-async function request(method, params) {
-  return new Promise((resolve, reject) => {
-    const httpMethod = $httpClient[method.toLowerCase()];
-    httpMethod(params, (error, response, data) => {
-      resolve({ error, response, data });
+async function request(method, url) {
+  return new Promise((resolve) => {
+    $httpClient[method.toLowerCase()](url, (error, response, data) => {
+      resolve({ error, data });
     });
   });
+}
+
+function parseCountryFromTrace(traceData) {
+  if (typeof traceData !== 'string') return null;
+  for (const line of traceData.split('\n')) {
+    const [key, value] = line.trim().split('=');
+    if (key === 'loc' && value) return value;
+  }
+  return null;
 }
 
 async function main() {
-  const { error, response, data } = await request(
-    "GET",
-    "https://ios.chat.openai.com"
-  );
+  const { error: checkErr, data: html } = await request("GET", "https://ios.chat.openai.com");
 
-  if (error) {
-    $done({
-      content: "Network Error",
-      backgroundColor: "",
-    });
-    return;
+  if (checkErr) {
+    return { content: "Network Error" };
   }
 
-  if (data.toLowerCase().includes("disallowed isp")) {
-    $done({
-      content: "Disallowed ISP",
-      backgroundColor: "",
-    });
-    return;
+  const lower = html.toLowerCase();
+  if (lower.includes("disallowed isp")) {
+    return { content: "Disallowed ISP" };
+  }
+  if (lower.includes("been blocked")) {
+    return { content: "Blocked" };
   }
 
-  if (data.toLowerCase().includes("been blocked")) {
-    $done({
-      content: "Blocked",
-      backgroundColor: "",
-    });
-    return;
-  }
+  const { data: trace } = await request("GET", "https://chat.openai.com/cdn-cgi/trace");
+  const country = parseCountryFromTrace(trace);
 
-  $done({
-    content: `Available`,
-    backgroundColor: "#88A788",
-  });
+  return {
+    content: country ? `Available (${country})` : "Available",
+    backgroundColor: "#88A788"
+  };
 }
 
 (async () => {
-  main()
-    .then((_) => { })
-    .catch((error) => {
-      $done({});
-    });
+  try {
+    const result = await main();
+    $done(result);
+  } catch (error) {
+    $done({});
+  }
 })();
