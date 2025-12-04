@@ -4,6 +4,7 @@ category: enhance
 icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png
 http:
   mitm:
+    - 'g.cn'
     - '*.g.cn'
     - '*.google.cn'
   url-rewrite:
