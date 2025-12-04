@@ -7,4 +7,4 @@ http:
     - '*.g.cn'
     - '*.google.cn'
   url-rewrite:
-    - ^https?://(?:www\.)?(?:g\.cn|google\.cn)/ https://www.google.com 307
+    - ^https?://(?:www\.)?(?:g\.cn|google\.cn) https://www.google.com 307
