@@ -1,0 +1,7 @@
+name: Block QUIC
+desc: Block the QUIC protocol and ensure that traffic travels through the standard HTTPS channel.
+category: enhance
+icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Reject.png
+
+rules:
+    - PROTOCOL,QUIC,REJECT,no-track

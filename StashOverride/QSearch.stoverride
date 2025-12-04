@@ -1,11 +1,11 @@
 name: QSearch
-desc: Aggregate search engines
+desc: Use shortcut commands (such as gg, yt, gh) in DuckDuckGo to quickly jump to sites like Google, YouTube, and GitHub
 category: enhance
 icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Magic.png
 
 http:
   mitm:
-    - "duckduckgo.com"
+    - 'duckduckgo.com'
   rewrite:
     # wiki xxx (Wikipedia)
     - ^https:\/\/duckduckgo.com\/\?q=wiki(\+|%20)([^&]+).+ https://wikipedia.org/wiki/$2 302

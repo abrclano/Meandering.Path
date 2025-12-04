@@ -1,7 +1,7 @@
 name: Collapsed tiles
 desc: Checks if ChatGPT, Gemini, Netflix, and YouTube are accessible or unblocked on your network
 category: tile
-icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Unlock.png
+icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Puzzle.png
 
 tiles:
   - name: ChatGPT-Check

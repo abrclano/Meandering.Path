@@ -1,0 +1,9 @@
+name: Force HTTP
+desc: Force the use of the HTTP engine only for HTTP/HTTPS traffic, ensuring that URL rewriting, MITM, scripts, and other functions take effect
+category: enhance
+icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png
+
+http:
+  force-http-engine:
+    - '*:80'   # HTTP
+    - '*:443'  # HTTPS
