@@ -47,52 +47,56 @@ function main(params) {
     }
   ];
 
+  // 获取所有有效代理（排除含关键词的）
   const validProxyRegex = /^(?!.*(?:自动|故障|流量|官网|套餐|机场|订阅|年|月|失联|频道|重置))/;
   const allValidProxies = params.proxies
     .filter(p => validProxyRegex.test(p.name))
     .map(p => p.name);
 
+  // 创建区域代理组
   const regionGroups = regions.map(r =>
     createProxyGroup(r.name, "url-test", r.icon, getProxiesByRegex(params.proxies, r.regex))
   );
 
+  // 创建通用策略组（Auto / Balance / Fallback）
   const strategyGroups = [
     createProxyGroup("Auto", "url-test", "Auto.png", allValidProxies),
     createProxyGroup("Balance", "load-balance", "Available.png", allValidProxies),
     createProxyGroup("Fallback", "fallback", "Bypass.png", allValidProxies)
   ];
 
+  // 所有动态代理名称（去重）
   const dynamicProxyNames = [...new Set([
     ...regionGroups.flatMap(g => g.proxies),
     ...allValidProxies
   ].filter(p => p !== "DIRECT"))];
 
   // === 预定义策略组 ===
-  const groupDefs = [
+  const predefinedGroups = [
     { name: "Final", type: "select", proxies: ["DIRECT", "Global", "Proxy"], icon: "Final.png" },
     { name: "Proxy", type: "select", proxies: dynamicProxyNames.length ? dynamicProxyNames : ["DIRECT"], icon: "Proxy.png" },
     { name: "Global", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", ...regions.map(r => r.name)], icon: "Global.png" },
     { name: "Mainland", type: "select", proxies: ["DIRECT", "Proxy", "Auto", "Balance", "Fallback", ...regions.map(r => r.name)], icon: "Direct.png" },
-    { name: "ChatGPT", type: "select", proxies: ["Proxy", "America", "Japan", "Singapore", "TaiWan", "HongKong", "Others"], icon: "ChatGPT.png" },
+    { name: "GPT", type: "select", proxies: ["America", "Japan", "Singapore", "TaiWan", "Others", "Proxy"], icon: "AI.png" },
     { name: "YouTube", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", ...regions.map(r => r.name)], icon: "YouTube.png" },
     { name: "BiliBili", type: "select", proxies: ["DIRECT", "HongKong", "TaiWan"], icon: "bilibili.png" },
     { name: "Streaming", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", ...regions.map(r => r.name)], icon: "ForeignMedia.png" },
     { name: "Telegram", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", ...regions.map(r => r.name)], icon: "Telegram.png" },
     { name: "Google", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", ...regions.map(r => r.name)], icon: "Google.png" },
     { name: "Games", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", ...regions.map(r => r.name)], icon: "Game.png" }
-  ];
-
-  const predefinedGroups = groupDefs.map(g => ({
+  ].map(g => ({
     ...g,
     icon: ICON_BASE + g.icon
   }));
 
+  // === 规则设置 ===
   params["proxy-groups"] = [...predefinedGroups, ...regionGroups, ...strategyGroups];
 
   // === 规则映射：[规则集名称, 策略组] ===
   const ruleMapping = [
     ["private", "DIRECT"],
-    ["openai", "ChatGPT"],
+    ["openai", "GPT"],
+    ["google-gemini", "GPT"],
     ["games-cn", "Mainland"],
     ["games", "Games"],
     ["github", "Global"],

@@ -74,7 +74,7 @@ function main(params) {
     { name: "Proxy", type: "select", proxies: dynamicProxyNames.length ? dynamicProxyNames : ["DIRECT"], icon: "Proxy.png" },
     { name: "Global", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", ...regions.map(r => r.name)], icon: "Global.png" },
     { name: "Mainland", type: "select", proxies: ["DIRECT", "Proxy", "Auto", "Balance", "Fallback", ...regions.map(r => r.name)], icon: "Direct.png" },
-    { name: "ChatGPT", type: "select", proxies: ["Proxy", "America", "Japan", "Singapore", "TaiWan", "HongKong", "Others"], icon: "ChatGPT.png" },
+    { name: "GPT", type: "select", proxies: ["America", "Japan", "Singapore", "TaiWan", "Others", "Proxy"], icon: "AI.png" },
     { name: "YouTube", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", ...regions.map(r => r.name)], icon: "YouTube.png" },
     { name: "BiliBili", type: "select", proxies: ["DIRECT", "HongKong", "TaiWan"], icon: "bilibili.png" },
     { name: "Streaming", type: "select", proxies: ["Proxy", "Auto", "Balance", "Fallback", ...regions.map(r => r.name)], icon: "ForeignMedia.png" },
@@ -93,7 +93,8 @@ function main(params) {
     "AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN,no-resolve))),REJECT", // QUIC
     // "GEOSITE,Category-ads-all,REJECT", // 可能导致某些网站无法访问
     "GEOSITE,Private,DIRECT",
-    "GEOSITE,Openai,ChatGPT",
+    "GEOSITE,Openai,GPT",
+    "GEOSITE,Google-gemini,GPT",
     "GEOSITE,Category-games@cn,Mainland",
     "GEOSITE,Category-games,Games",
     "GEOSITE,Github,Global",
