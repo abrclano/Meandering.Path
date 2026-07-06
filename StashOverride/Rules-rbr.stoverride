@@ -1,0 +1,126 @@
+name: Rules
+desc: |-
+  A comprehensive routing ruleset for stash, including AI services, streaming platforms and CN/non-CN split.
+author: |-
+  abrclano[https://github.com/abrclano]
+category: rules
+icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bypass.png
+
+proxy-groups: #!replace
+
+  - name: Final
+    type: select
+    proxies: [自动, 香港, 台湾, 日本, 新加坡, 美国, DIRECT]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+
+  - name: Global
+    type: select
+    proxies: [香港, 台湾, 日本, 新加坡, 美国, 自动, DIRECT]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
+
+  - name: Spotify
+    type: select
+    proxies: [DIRECT, 日本, 香港, 台湾, 美国, 新加坡]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
+
+  - name: Telegram
+    type: select
+    proxies: [香港, 台湾, 日本, 新加坡, 美国, 自动]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+
+  - name: Twitter
+    type: select
+    proxies: [香港, 台湾, 日本, 新加坡, 美国, 自动]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
+
+  - name: GPT
+    type: select
+    proxies: [香港, 台湾, 日本, 新加坡, 美国, 自动]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png
+
+  - name: Google
+    type: select
+    proxies: [香港, 台湾, 日本, 新加坡, 美国, 自动]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
+
+  - name: YouTube
+    type: select
+    proxies: [香港, 台湾, 日本, 新加坡, 美国, 自动]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+
+  - name: 哔哩哔哩
+    type: select
+    proxies: [香港, 台湾, DIRECT]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png
+
+  - name: 自动
+    type: url-test
+    include-all: true
+    tolerance: 10
+    interval: 300
+    url: http://www.gstatic.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+
+  - name: 香港
+    type: url-test
+    include-all: true
+    filter: "(?i)(?!直连)(港|hk|hongkong|hong kong)"
+    tolerance: 10
+    interval: 300
+    url: http://www.gstatic.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
+
+  - name: 台湾
+    type: url-test
+    include-all: true
+    filter: "(?i)(?!直连)(台|tw|taiwan)"
+    tolerance: 10
+    interval: 300
+    url: http://www.gstatic.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
+
+  - name: 日本
+    type: url-test
+    include-all: true
+    filter: "(?i)(?!直连)(日本|jp|japan)"
+    tolerance: 10
+    interval: 300
+    url: http://www.gstatic.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
+
+  - name: 美国
+    type: url-test
+    include-all: true
+    filter: "(?i)(?!直连)(美|us|unitedstates|united states)"
+    tolerance: 10
+    interval: 300
+    url: http://www.gstatic.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+
+  - name: 新加坡
+    type: url-test
+    include-all: true
+    filter: "(?i)(新|狮城|sg|singapore)"
+    tolerance: 10
+    interval: 300
+    url: http://www.gstatic.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+
+rules: #!replace
+  - GEOSITE,private,DIRECT
+  - GEOSITE,openai,GPT
+  - GEOSITE,google-gemini,GPT
+  - GEOSITE,github,Global
+  - GEOSITE,spotify,Spotify
+  - GEOSITE,twitter,Twitter
+  - GEOSITE,youtube,YouTube
+  - GEOSITE,google,Google
+  - GEOSITE,bilibili,哔哩哔哩
+  - GEOSITE,pixiv,Global
+  - GEOSITE,cn,DIRECT
+  - GEOSITE,geolocation-!cn,Global
+  - GEOIP,private,DIRECT,no-resolve
+  - GEOIP,telegram,Telegram,no-resolve
+  - GEOIP,jp,日本,no-resolve
+  - GEOIP,cn,DIRECT,no-resolve
+  - MATCH,Final
